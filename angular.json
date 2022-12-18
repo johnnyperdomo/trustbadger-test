@@ -31,7 +31,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/dashkit/css/theme.min.css",
+              "src/assets/dashkit/fonts/feather/feather.css",
+              "src/assets/dashkit/libs/flatpickr/dist/flatpickr.min.css",
+              "src/assets/dashkit/libs/quill/dist/quill.core.css",
+              "src/assets/dashkit/libs/highlightjs/styles/vs2015.css"
             ],
             "scripts": []
           },
