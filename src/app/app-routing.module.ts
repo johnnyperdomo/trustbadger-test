@@ -16,28 +16,42 @@ import { BillingComponent } from './settings/billing/billing.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ShowcaseAllComponent } from './showcase-all/showcase-all.component';
 
+import {
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+} from '@angular/fire/compat/auth-guard';
+
+import { canActivate } from '@angular/fire/compat/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']); //if no logged in, restrict access
+const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']); //if logged in, block auth
+
 const routes: Routes = [
 //Main
-{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+ { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 {
   path: 'dashboard',
   component: DashboardComponent,
+  ...canActivate(redirectUnauthorizedToLogin)
 },
 
 {
   path: 'onboarding',
   component: OnboardingComponent,
+  ...canActivate(redirectUnauthorizedToLogin)
 },
 
 //auth
 {
   path: 'login',
   component: LoginComponent,
+  ...canActivate(redirectLoggedInToDashboard)
 },
 
 {
   path: 'signup',
   component: SignupComponent,
+  ...canActivate(redirectLoggedInToDashboard)
 },
 
  //Settings
@@ -49,6 +63,7 @@ const routes: Routes = [
 {
   path: 'settings',
   component: SettingsComponent,
+   ...canActivate(redirectUnauthorizedToLogin),
   children: [
    // { path: 'account', component: AccountComponent },
     { path: 'billing', component: BillingComponent },
@@ -57,6 +72,7 @@ const routes: Routes = [
 
 {
   path: 'collections',
+  ...canActivate(redirectUnauthorizedToLogin),
   children: [
     {  path: ':id', redirectTo: 'collections/:id/reviews', pathMatch: 'full' },
     
@@ -74,18 +90,24 @@ const routes: Routes = [
 
 {
   path: "showcase-all",
-  component: ShowcaseAllComponent 
+  component: ShowcaseAllComponent,
+  ...canActivate(redirectUnauthorizedToLogin),
 },
 
 {
   path: "collections/:id",
   component: CollectionComponent,
+  ...canActivate(redirectUnauthorizedToLogin),
   children: [
     {  path: 'reviews', component: ReviewsComponent },
     {  path: 'embed', component: EmbedComponent },
     {  path: 'showcase', component: ShowcaseComponent },
   ]
 },
+
+// Later make sure to create a real 404 page for this
+{ path: '**', redirectTo: 'dashboard' },
+
 
 ];
 

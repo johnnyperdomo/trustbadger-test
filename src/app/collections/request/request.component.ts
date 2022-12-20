@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  } from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-request',
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss']
 })
-export class RequestComponent implements OnInit {
+export class RequestComponent {
 
-  constructor() { }
+  constructor(private _snackBar: MatSnackBar) { }
 
-  ngOnInit(): void {
+  openSnackBar() {
+    console.log("test")
+    this._snackBar.open("testing", "ok", {
+      duration: 3000
+    });
   }
 
 }

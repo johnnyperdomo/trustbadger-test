@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +29,9 @@ import { EmbedComponent } from './collections/collection/embed/embed.component';
 import { CollectionNavbarComponent } from './collections/collection-navbar/collection-navbar.component';
 import { ShowcaseComponent } from './collections/showcase/showcase.component';
 import { ShowcaseAllComponent } from './showcase-all/showcase-all.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -51,6 +60,12 @@ import { ShowcaseAllComponent } from './showcase-all/showcase-all.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
