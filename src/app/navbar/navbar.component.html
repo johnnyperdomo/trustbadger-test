@@ -1,4 +1,3 @@
-
 <!-- LATER: make collapsable navbar a little bit better, a little weird looking just on the left side -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
   <div class="container">
@@ -16,13 +15,12 @@
     </button>
 
     <!-- Brand =====================================-->
-    <a class="navbar-brand mr-auto" [routerLink]="['/dashboard']" >
+    <a class="navbar-brand mr-auto" [routerLink]="['/dashboard']">
       TrustBadger
     </a>
 
     <!-- User ==========================================-->
     <div class="navbar-user order-lg-3">
-
       <!-- Settings -->
       <div class="dropdown">
         <!-- Toggle -->
@@ -42,7 +40,7 @@
           <a class="dropdown-item" [routerLink]="['/settings/billing']"
             >Billing</a
           >
-          
+
           <hr class="dropdown-divider" />
 
           <button class="dropdown-item" (click)="onLogout()">Logout</button>
@@ -54,15 +52,16 @@
     <div id="navbar" class="collapse navbar-collapse mr-lg-auto order-lg-2">
       <ul class="navbar-nav mr-lg-auto">
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" data-toggle="modal" [routerLink]="['/dashboard']" >
+          <a class="nav-link" data-toggle="modal" [routerLink]="['/dashboard']">
             Dashboard
           </a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <!-- LATER -->
+        <!-- <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" data-toggle="modal" [routerLink]="['/showcase-all']" >
             All Reviews 
           </a>
-        </li>
+        </li> -->
         <li class="nav-item" routerLinkActive="active">
           <a
             class="nav-link"
@@ -72,7 +71,6 @@
             Getting Started
           </a>
         </li>
-  
       </ul>
     </div>
   </div>

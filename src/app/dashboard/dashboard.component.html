@@ -1,214 +1,172 @@
-
 <app-navbar></app-navbar>
 
 <div class="main-content mt-4">
   <div class="container">
+    <!-- Overview Section -->
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-end">
+          <div class="col">
+            <!-- Pretitle -->
+            <h6 class="header-pretitle">Overview</h6>
 
-<!-- Overview Section -->
-<div class="container-fluid">
+            <!-- Title -->
+            <h1 class="header-title">Reviews</h1>
+          </div>
+          <!-- LATER -->
+          <!-- <div class="col-auto">
 
-  <div class="header-body">
-    <div class="row align-items-end">
-      <div class="col">
-
-        <!-- Pretitle -->
-        <h6 class="header-pretitle">
-          Overview
-        </h6>
-
-        <!-- Title -->
-        <h1 class="header-title">
-          Reviews
-        </h1>
-
-      </div>
-      <div class="col-auto">
-
-        <!-- Button -->
         <a href="#!" class="btn btn-primary lift">
           View All
         </a>
 
-      </div>
-    </div> <!-- / .row -->
-  </div>
-
-        <!-- Stats -->
-        <div class="row mt-4">
-
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col">
-                    <!-- Title -->
-                    <h6 class="text-uppercase text-muted mb-2">
-                      All Reviews
-                    </h6>
-      
-                    <!-- Heading -->
-                    <span class="h2 mb-0">
-                      {{ allReviews || "" }}
-                    </span>
-                  </div>
-      
-                  <div class="col-auto">
-                    <span class="h2 fe fe-award text-muted mb-0"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col">
-                    <!-- Text Reviews -->
-                    <h6 class="text-uppercase text-muted mb-2">
-                      Text Reviews
-                    </h6>
-      
-                    <!-- Heading -->
-                    <span class="h2 mb-0">
-        
-                      {{numberOfTextReviews || ""}}
-                    </span>
-                  </div>
-      
-                  <div class="col-auto">
-                    <span class="h2 fe fe-edit-3 text-muted mb-0"></span>
-                  </div>
-                </div>
-              </div>
-          </div>
-
-          
+      </div> -->
         </div>
+        <!-- / .row -->
+      </div>
 
+      <!-- Stats -->
+      <div class="row mt-4">
         <div class="col-12 col-sm-6 col-lg-4">
           <div class="card">
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col">
                   <!-- Title -->
-                  <h6 class="text-uppercase text-muted mb-2">
-                    Video Reviews
-                  </h6>
-    
+                  <h6 class="text-uppercase text-muted mb-2">All Reviews</h6>
+
                   <!-- Heading -->
+                  <span class="h2 mb-0">
+                    {{ allReviews || "" }}
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <span class="h2 fe fe-award text-muted mb-0"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LATER -->
+        <!-- <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted mb-2">Text Reviews</h6>
+
+                  <span class="h2 mb-0">
+                    {{ numberOfTextReviews || "" }}
+                  </span>
+                </div>
+
+                <div class="col-auto">
+                  <span class="h2 fe fe-edit-3 text-muted mb-0"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted mb-2">Video Reviews</h6>
+
                   <span class="h2 mb-0">
                     {{ numberOfVideoReviews || "" }}
                   </span>
                 </div>
-    
+
                 <div class="col-auto">
                   <span class="h2 fe fe-video text-muted mb-0"></span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-
-
     </div>
 
-
-
-<!-- Collections Section -->
-<div class="container-fluid mt-4">
-
-  <div class="header-body">
-    <div class="row align-items-end">
-      <div class="col">
-
-        <!-- Title -->
-        <h1 class="header-title">
-          Collections
-        </h1>
-
+    <!-- Collections Section -->
+    <div class="container-fluid mt-4">
+      <div class="header-body">
+        <div class="row align-items-end">
+          <div class="col">
+            <!-- Title -->
+            <h1 class="header-title">Collections</h1>
+          </div>
+          <div class="col-auto">
+            <!-- Button -->
+            <a [routerLink]="['/collections/new']" class="btn btn-primary lift">
+              Create New Collection
+            </a>
+          </div>
+        </div>
+        <!-- / .row -->
       </div>
-      <div class="col-auto">
 
-        <!-- Button -->
-        <a [routerLink]="['/collections/new']" class="btn btn-primary lift">
-          Create New Collection
-        </a>
-
-      </div>
-    </div> <!-- / .row -->
-  </div>
-
-        <!-- Stats -->
-        <div class="row mt-4">
-
-          <div class="col-12 col-sm-6 col-lg-4" *ngFor="let collection of collections">
-            <div class="card"  >
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-auto">
-
-                    <a class="avatar">
-                      <img src={{collection.img}} alt="..." class="avatar-img rounded-circle">
-                    </a>
-
-                  </div>
-                  <div class="col ms-n2">
-
-                    <!-- Title -->
-                    <h4 class="fw-normal mb-1">
-                      <a href="#!">{{collection.name}}</a>
-                    </h4>
-
-                    <!-- Text -->
-                    <small class="text-muted">
-                      {{collection.numberOfReviews}} Reviews
-                    </small>
-
-                  </div>
-                  <div class="col-auto">
-
-                    <!-- Dropdown -->
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-
-
-
-
-                  </div>
+      <!-- Stats -->
+      <div class="row mt-4">
+        <div
+          class="col-12 col-sm-6 col-lg-4"
+          *ngFor="let collection of collections"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <a class="avatar">
+                    <img
+                      src="{{ collection.img }}"
+                      alt="..."
+                      class="avatar-img rounded-circle"
+                    />
+                  </a>
                 </div>
-              
+                <div class="col ms-n2">
+                  <!-- Title -->
+                  <h4 class="fw-normal mb-1">
+                    <a href="#!">{{ collection.name }}</a>
+                  </h4>
+
+                  <!-- Text -->
+                  <small class="text-muted">
+                    {{ collection.numberOfReviews }} Reviews
+                  </small>
+                </div>
+                <div class="col-auto">
+                  <!-- Dropdown -->
+
+                  <a
+                    href="#"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fe fe-edit-3 text-muted"></i>
+                  </a>
+
+                  <!-- <div class="dropdown">
+                  LATER
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <a href="#!" class="dropdown-item"> Action </a>
+                      <a href="#!" class="dropdown-item"> Another action </a>
+                      <a href="#!" class="dropdown-item">
+                        Something else here
+                      </a>
+                    </div>
+                  </div> -->
+                </div>
               </div>
             </div>
           </div>
-
-          
-
- 
+        </div>
       </div>
-
-
     </div>
-
-
   </div>
 </div>
