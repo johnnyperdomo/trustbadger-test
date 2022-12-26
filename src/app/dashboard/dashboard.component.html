@@ -120,9 +120,13 @@
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col-auto">
-                  <a class="avatar">
+                  <a
+                    class="avatar"
+                    *ngIf="collection.logo_url"
+                    [routerLink]="['/collections/', collection.id, 'reviews']"
+                  >
                     <img
-                      src="{{ collection.img }}"
+                      src="{{ collection.logo_url }}"
                       alt="..."
                       class="avatar-img rounded-circle"
                     />
@@ -131,22 +135,31 @@
                 <div class="col ms-n2">
                   <!-- Title -->
                   <h4 class="fw-normal mb-1">
-                    <a href="#!">{{ collection.name }}</a>
+                    <a
+                      [routerLink]="['/collections/', collection.id, 'reviews']"
+                      class="stretched-link"
+                      >{{ collection.name }}</a
+                    >
                   </h4>
 
                   <!-- Text -->
                   <small class="text-muted">
-                    {{ collection.numberOfReviews }} Reviews
+                    {{
+                      collection.stats.no_text_reviews +
+                        collection.stats.no_video_reviews
+                    }}
+                    Reviews
                   </small>
                 </div>
                 <div class="col-auto">
                   <!-- Dropdown -->
 
                   <a
-                    href="#"
+                    [routerLink]="['/collections/', collection.id, 'reviews']"
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    class="stretched-link"
                   >
                     <i class="fe fe-edit-3 text-muted"></i>
                   </a>
