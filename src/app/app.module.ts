@@ -6,8 +6,6 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
-
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,12 +28,13 @@ import { EmbedComponent } from './collections/collection/embed/embed.component';
 import { CollectionNavbarComponent } from './collections/collection-navbar/collection-navbar.component';
 import { ShowcaseComponent } from './collections/showcase/showcase.component';
 import { ShowcaseAllComponent } from './showcase-all/showcase-all.component';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button'
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { environment } from '../environments/environment';
 import { TextRequestDialogComponent } from './collections/request/text-request-dialog/text-request-dialog.component';
@@ -70,7 +69,7 @@ import { TextRequestDialogComponent } from './collections/request/text-request-d
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
-MatButtonModule,
+    MatButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -78,8 +77,10 @@ MatButtonModule,
     AngularFirestoreModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTooltipModule,
+    ClipboardModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
