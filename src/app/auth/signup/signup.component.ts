@@ -3,12 +3,12 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as firebase from 'firebase/compat/app'
+import * as firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
@@ -56,6 +56,11 @@ export class SignupComponent implements OnInit {
               firstName: firstName,
               lastName: lastName,
               created: firebase.default.firestore.Timestamp.now(),
+              stats: {
+                no_collections: 0,
+                no_text_reviews: 0,
+                no_video_reviews: 0
+              },
             },
             { merge: true }
           );
