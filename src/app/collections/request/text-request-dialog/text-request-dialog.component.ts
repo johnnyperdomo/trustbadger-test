@@ -10,37 +10,26 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/compat/app';
 import { nanoid } from 'nanoid';
 
-export interface DialogData {
-  testimonial: string;
-  name: string;
-  email: string;
-}
-
 @Component({
   selector: 'app-text-request-dialog',
   templateUrl: './text-request-dialog.component.html',
   styleUrls: ['./text-request-dialog.component.scss'],
 })
 export class TextRequestDialogComponent {
+  userID: string = '';
   textForm!: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<TextRequestDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     private router: Router,
     private db: AngularFirestore
   ) {
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
-
     this.setupLoginForm();
   }
 
   setupLoginForm() {
-    console.log(this.router.url);
-
     this.textForm = this._formBuilder.group({
       name: ['', [Validators.required]],
       review: ['', [Validators.required]],
@@ -48,20 +37,15 @@ export class TextRequestDialogComponent {
     });
   }
 
-  //TODO: disable form submit if not valid
-
   addTextReview() {
     const email = this.textForm.value.email;
     const name = this.textForm.value.name;
     const review = this.textForm.value.review;
 
-    this.submitReview(
-      'RCraskTUG9U2j252a3yPKfMpsGJ3',
-      'WicLU38BZWSGIHA4U5EK',
-      name,
-      email,
-      review
-    );
+    let userID = this.data.userID;
+    let collectionsID = this.data.id;
+
+    this.submitReview(userID, collectionsID, name, email, review);
   }
 
   async submitReview(
