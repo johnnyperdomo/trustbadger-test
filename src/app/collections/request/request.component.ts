@@ -1,5 +1,9 @@
 import { Component,  } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { TextRequestDialogComponent } from './text-request-dialog/text-request-dialog.component';
+
+
 
 @Component({
   selector: 'app-request',
@@ -8,13 +12,27 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class RequestComponent {
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar, private dialog: MatDialog) { }
 
-  openSnackBar() {
-    console.log("test")
-    this._snackBar.open("testing", "ok", {
-      duration: 3000
-    });
-  }
+
+openTextReviewDialog() {
+
+  const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        this.dialog.open(TextRequestDialogComponent, dialogConfig);
+}
+
+
+openVideoReviewDialog() {
+
+}
+
+
+  // openSnackBar() {
+  //   console.log("test")
+  //   this._snackBar.open("testing", "ok", {
+  //     duration: 3000
+  //   });
+  // }
 
 }

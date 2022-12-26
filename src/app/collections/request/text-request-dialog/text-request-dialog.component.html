@@ -1,0 +1,45 @@
+<form class="example-form" [formGroup]="textForm">
+
+<h1 mat-dialog-title>Leave Us a Review </h1>
+
+<div mat-dialog-content>
+ 
+<!-- LATER: add validation
+LATER: let users upload photo -->
+
+
+<div>
+  <!-- testimonial -->
+  <mat-form-field appearance="fill">
+    <mat-label>Your Written Review</mat-label>
+    <textarea matInput placeholder="I love this because..." required="" formControlName="review"></textarea>
+  </mat-form-field>
+</div>
+
+
+<div>
+<!-- Your Name  -->
+<mat-form-field appearance="fill">
+    <mat-label>Your Name</mat-label>
+    <input matInput required="" formControlName="name">
+  </mat-form-field>
+</div>
+  
+<div>
+
+  <!-- Your Email  -->
+  <mat-form-field appearance="fill">
+    <mat-label>Your Email</mat-label>
+    <input matInput required="" formControlName="email">
+  </mat-form-field>
+</div>
+
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-stroked-button mat-dialog-close >Cancel</button>
+  <button mat-stroked-button mat-dialog-close cdkFocusInitial color="primary" (click)="addTextReview()" [disabled]="!textForm.valid">Send Review</button>
+</div>
+
+</form>

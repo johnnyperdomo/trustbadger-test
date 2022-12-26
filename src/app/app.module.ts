@@ -7,6 +7,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,13 @@ import { ShowcaseComponent } from './collections/showcase/showcase.component';
 import { ShowcaseAllComponent } from './showcase-all/showcase-all.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button'
+
+
 import { environment } from '../environments/environment';
+import { TextRequestDialogComponent } from './collections/request/text-request-dialog/text-request-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +61,7 @@ import { environment } from '../environments/environment';
     CollectionNavbarComponent,
     ShowcaseComponent,
     ShowcaseAllComponent,
+    TextRequestDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,10 +70,14 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
+MatButtonModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
