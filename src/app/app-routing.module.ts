@@ -27,92 +27,110 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']); //i
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']); //if logged in, block auth
 
 const routes: Routes = [
-//Main
- { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-{
-  path: 'dashboard',
-  component: DashboardComponent,
-  ...canActivate(redirectUnauthorizedToLogin)
-},
+  //Main
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
 
-{
-  path: 'onboarding',
-  component: OnboardingComponent,
-  ...canActivate(redirectUnauthorizedToLogin)
-},
+  {
+    path: 'onboarding',
+    component: OnboardingComponent,
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
 
-//auth
-{
-  path: 'login',
-  component: LoginComponent,
-  ...canActivate(redirectLoggedInToDashboard)
-},
+  //auth
+  {
+    path: 'login',
+    component: LoginComponent,
+    ...canActivate(redirectLoggedInToDashboard),
+  },
 
-{
-  path: 'signup',
-  component: SignupComponent,
-  ...canActivate(redirectLoggedInToDashboard)
-},
+  {
+    path: 'signup',
+    component: SignupComponent,
+    ...canActivate(redirectLoggedInToDashboard),
+  },
 
- //Settings
- {
-  path: 'settings',
-  redirectTo: 'settings/billing',
-}, 
+  //Settings
+  {
+    path: 'settings',
+    redirectTo: 'settings/billing',
+  },
 
-{
-  path: 'settings',
-  component: SettingsComponent,
-   ...canActivate(redirectUnauthorizedToLogin),
-  children: [
-   // { path: 'account', component: AccountComponent },
-    { path: 'billing', component: BillingComponent },
-  ],
-},
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    ...canActivate(redirectUnauthorizedToLogin),
+    children: [
+      // { path: 'account', component: AccountComponent },
+      { path: 'billing', component: BillingComponent },
+    ],
+  },
 
-{
-  path: 'collections',
-  ...canActivate(redirectUnauthorizedToLogin),
-  children: [
-    {  path: ':id', redirectTo: 'collections/:id/reviews', pathMatch: 'full' },
-    
-    {  path: 'new', component: EditCollectionComponent },
+  // { //LATER
+  //   path: 'showcase-all',
+  //   component: ShowcaseAllComponent,
+  //   ...canActivate(redirectUnauthorizedToLogin),
+  // },
 
-    {  path: ':id', component: CollectionComponent },
-    {  path: ':id/edit', component: EditCollectionComponent },
-    
+  //non-auth, public facing
+  {
+    path: 'collections',
+    children: [
+      { path: 'request/:id', component: RequestComponent },
+      { path: 'request/:id/success', component: RequestSuccessComponent },
+    ],
+  },
 
-    {  path: 'request/:id', component: RequestComponent },
-    {  path: 'request/:id/success', component: RequestSuccessComponent },
-  
-  ],
-},
+  //Collections
+  {
+    path: 'collections/:id',
+    redirectTo: 'collections/:id/reviews',
+  },
 
-{
-  path: "showcase-all",
-  component: ShowcaseAllComponent,
-  ...canActivate(redirectUnauthorizedToLogin),
-},
+  {
+    path: 'new/collections',
+    ...canActivate(redirectUnauthorizedToLogin),
+    component: EditCollectionComponent,
+  },
 
-{
-  path: "collections/:id",
-  component: CollectionComponent,
-  ...canActivate(redirectUnauthorizedToLogin),
-  children: [
-    {  path: 'reviews', component: ReviewsComponent },
-    {  path: 'embed', component: EmbedComponent },
-    {  path: 'showcase', component: ShowcaseComponent },
-  ]
-},
+  //auth-required
+  {
+    path: 'collections',
+    ...canActivate(redirectUnauthorizedToLogin),
+    children: [
+      { path: ':id', component: CollectionComponent },
+      { path: ':id/edit', component: EditCollectionComponent },
+    ],
+  },
 
-// Later make sure to create a real 404 page for this
-{ path: '**', redirectTo: 'dashboard' },
+  //non-auth, public facing
+  {
+    path: 'collections/:id',
+    component: CollectionComponent,
+    children: [{ path: 'showcase', component: ShowcaseComponent }],
+  },
 
+  //auth required
+  {
+    path: 'collections/:id',
+    component: CollectionComponent,
+    ...canActivate(redirectUnauthorizedToLogin),
+    children: [
+      { path: 'reviews', component: ReviewsComponent },
+      { path: 'embed', component: EmbedComponent },
+    ],
+  },
 
+  // Later make sure to create a real 404 page for this
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
