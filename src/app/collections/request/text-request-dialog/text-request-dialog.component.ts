@@ -27,6 +27,7 @@ export class TextRequestDialogComponent {
     private db: AngularFirestore
   ) {
     this.setupLoginForm();
+    console.log(data);
   }
 
   setupLoginForm() {
@@ -42,8 +43,8 @@ export class TextRequestDialogComponent {
     const name = this.textForm.value.name;
     const review = this.textForm.value.review;
 
-    let userID = this.data.userID;
-    let collectionsID = this.data.id;
+    let userID = this.data.collection.userID;
+    let collectionsID = this.data.collection.id;
 
     this.submitReview(userID, collectionsID, name, email, review);
   }
@@ -79,8 +80,16 @@ export class TextRequestDialogComponent {
           { merge: true }
         );
 
+      if (this.data.redirect == true) {
+        console.log('redirect true');
+
+        this.redirectToSuccessPage();
+      } else {
+        console.log('redirect false');
+        //LATER: show snackbar notification
+      }
+
       //when review is submitted
-      this.redirectToSuccessPage();
     } catch (error) {
       alert(error);
     }

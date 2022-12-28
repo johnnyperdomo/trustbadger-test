@@ -23,7 +23,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     private db: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router
-  ) {}
+  ) {
+    //TODO: check if page is create or edit
+  }
 
   ngOnInit(): void {
     this.setupForm();
@@ -87,14 +89,14 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       }
       //LATER: catch for errors if user not identified
     });
-    //TODO: create in firestore
-    //TODO: route to new collection with corresponding ID
     //LATER: add spinner
   }
 
   redirectToNewCollection(id: string) {
     this.router.navigate([`collections/${id}/reviews`]);
   }
+
+  getCollectionInformationToEdit() {}
 
   ngOnDestroy() {
     if (this.changeDetectionSub) {

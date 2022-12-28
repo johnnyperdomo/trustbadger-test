@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { TextRequestDialogComponent } from '../../request/text-request-dialog/text-request-dialog.component';
 
 @Component({
   selector: 'app-reviews',
@@ -10,32 +12,31 @@ import { Router } from '@angular/router';
 })
 export class ReviewsComponent implements OnInit {
   reviews: any[] = [];
+  collectionID: string = '';
 
   constructor(
     private db: AngularFirestore,
     private router: Router,
-    private auth: AngularFireAuth
-  ) {}
+    private auth: AngularFireAuth,
+    private dialog: MatDialog
+  ) {
+    this.collectionID = this.router.url.split('collections/')[1].split('/')[0];
+    ('collections');
+  }
 
   ngOnInit(): void {
     this.getAllReviews();
   }
 
   async getAllReviews() {
-    const collectionID = this.router.url.split('collections/')[1].split('/')[0];
-    ('collections');
-
     try {
       this.db
         .collection('reviews', (ref) =>
-          ref.where('collections', 'array-contains', collectionID)
+          ref.where('collections', 'array-contains', this.collectionID)
         )
         .valueChanges()
         .subscribe((reviews: any) => {
           if (reviews) {
-            console.log(reviews);
-
-            console.log(this.convertTimestamp(reviews[0].created));
             this.reviews = reviews;
           } else {
             //LATER: do something
@@ -72,6 +73,33 @@ export class ReviewsComponent implements OnInit {
 
       console.log('true');
     }
+  }
+
+  async addReview() {
+    try {
+      this.db
+        .collection('collections')
+        .doc(this.collectionID)
+        .valueChanges()
+        .subscribe((data: any) => {
+          console.log(data);
+
+          if (data) {
+            const stream = {
+              redirect: false,
+              collection: data,
+            };
+
+            this.dialog.open(TextRequestDialogComponent, {
+              data: stream,
+              autoFocus: true,
+            });
+          } else {
+            alert('page not found');
+            //LATER: update this to just show a 404 if anything
+          }
+        });
+    } catch (error) {}
   }
 
   convertTimestamp(timestamp: any) {
