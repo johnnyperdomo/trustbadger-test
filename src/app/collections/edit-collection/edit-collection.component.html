@@ -1,134 +1,123 @@
 <app-navbar></app-navbar>
 
 <div class="main-content mt-4">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-10 col-xl-8">
-          
-  
-            <!-- Form -->
-            <form
-              *ngIf="collectionForm"
-              [formGroup]="collectionForm"
-            >
-              <!-- Collection Name -->
-  
-              <div class="form-group">
-                <label for="collectionName">Collection Name</label>
-                <input
-                  type="text"
-                  id="collectionName"
-                  class="form-control"
-                  placeholder="Store 1: Johnny's Ecommerce Store"
-                  formControlName="collectionName"
-                />
-  
-                <!-- <span
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Form -->
+        <form *ngIf="collectionForm" [formGroup]="collectionForm">
+          <!-- Collection Name -->
+
+          <div class="form-group">
+            <label for="collectionName">Collection Name</label>
+            <input
+              type="text"
+              id="collectionName"
+              class="form-control"
+              placeholder="Store 1: Johnny's Ecommerce Store"
+              formControlName="collectionName"
+            />
+
+            <!-- <span
                   class="help-block-invalid"
                 >
                   Please enter a valid link name.</span
                 > -->
-                <small class="form-text text-muted mt-2">
-                    Name of your collection. Only for Internal Use.
-                </small>
-              </div>
-             
-                       <!-- Header Title -->
-  
-                       <div class="form-group">
-                        <label for="headerTitle">Header Title</label>
-                        <input
-                          type="text"
-                          id="headerTitle"
-                          class="form-control"
-                          placeholder="Leave Johnny's Store an Honest Review"
-                          formControlName="headerTitle"
-                        />
-          
-                        <!-- <span
+            <small class="form-text text-muted mt-2">
+              Name of your collection. Only for Internal Use.
+            </small>
+          </div>
+
+          <!-- Header Title -->
+
+          <div class="form-group">
+            <label for="headerTitle">Header Title</label>
+            <input
+              type="text"
+              id="headerTitle"
+              class="form-control"
+              placeholder="Leave Johnny's Store an Honest Review"
+              formControlName="headerTitle"
+            />
+
+            <!-- <span
                           class="help-block-invalid"
                         >
                           Please enter a valid link name.</span
                         > -->
-                        <small class="form-text text-muted mt-2">
-                            Reviewers will see this.
-                        </small>
-                      </div>
-
-                                              <!-- Header Title -->
-      
-                                              <div class="form-group">
-                    
-                                                <label for="formFile" class="form-label">Company Logo (Optional)</label>
-                              <input class="form-control" type="file" id="formFile" accept="image/*">
-                                  
-                                                <!-- <span
-                                                  class="help-block-invalid"
-                                                >
-                                                  Please enter a valid link name.</span
-                                                > -->
-                                                <small class="form-text text-muted mt-2">
-                                                    Optional. Company Logo to be Displayed on the page.
-                                                </small>
-                                              </div>
-                    
-  
-              <div class="form-group">
-                <label for="customMessage">Custom Message</label>
-                <textarea
-                  id="customMessage"
-                  class="form-control"
-                  placeholder="Please leave us a review and let us know how we did."
-                  formControlName="customMessage"
-                ></textarea>
-
-                <small class="form-text text-muted mt-2">
-                    Reviewers will see this.
-                </small>
-              </div>
-  
-             
-  
-            
-              <div
-                class="help-block-invalid form-group text-center"
-                
-              >
-              </div>
-  
-              <div class="row justify-content-center">
-                <!-- LATER: maybe add deactivate child, if user goes back or clicks cancel, to prevent accidental deletion -->
-                <!-- Cancel Button -->
-                <div class="col-8 col-sm-6 col-md-4">
-                  <a
-                  [routerLink]="['/dashboard']"
-                  class="btn btn-lg btn-block btn-white mb-3"
-                    
-                  >
-                    Cancel
-                </a>
-                </div>
-  
-                <!-- Submit -->
-                <div class="col-8 col-sm-6 col-md-4">
-  
-                  <!-- FIX: don't let user spam create button -->
-                  <!-- LATER: change text depending on editmode or not -->
-                  <!-- [disabled]="!collectionForm.valid" -->
-                  <button
-                    class="btn btn-lg btn-block btn-primary mb-3"
-                 
-                    type="submit"
-                  >
-                                    <!-- Loading Spinner -->
-
-                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" mt-2></span>
-                    Create Collection
-                  </button>
-                </div>
-              </div>
-            </form>
+            <small class="form-text text-muted mt-2">
+              Reviewers will see this.
+            </small>
           </div>
-        </div>
+
+          <!-- <div class="form-group">
+            LATER: 
+            <label for="formFile" class="form-label"
+              >Company Logo (Optional)</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              accept="image/*"
+            />
+
+            <small class="form-text text-muted mt-2">
+              Optional. Company Logo to be Displayed on the page.
+            </small>
+          </div> -->
+
+          <div class="form-group">
+            <label for="customMessage">Custom Message</label>
+            <textarea
+              id="customMessage"
+              class="form-control"
+              placeholder="Please leave us a review and let us know how we did."
+              formControlName="customMessage"
+            ></textarea>
+
+            <small class="form-text text-muted mt-2">
+              Reviewers will see this.
+            </small>
+          </div>
+
+          <div class="help-block-invalid form-group text-center"></div>
+
+          <div class="row justify-content-center">
+            <!-- LATER: maybe add deactivate child, if user goes back or clicks cancel, to prevent accidental deletion -->
+            <!-- Cancel Button -->
+            <div class="col-8 col-sm-6 col-md-4">
+              <a
+                [routerLink]="['/dashboard']"
+                class="btn btn-lg btn-block btn-white mb-3"
+              >
+                Cancel
+              </a>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-8 col-sm-6 col-md-4">
+              <!-- FIX: don't let user spam create button -->
+              <!-- LATER: change text depending on editmode or not -->
+              <!-- [disabled]="!collectionForm.valid" -->
+              <button
+                class="btn btn-lg btn-block btn-primary mb-3"
+                type="submit"
+              >
+                <!-- Loading Spinner -->
+
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                  mt-2
+                ></span>
+                Create Collection
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
+</div>

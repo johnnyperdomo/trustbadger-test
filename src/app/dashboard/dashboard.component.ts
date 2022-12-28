@@ -12,11 +12,9 @@ export class DashboardComponent implements OnInit {
   numberOfTextReviews: number = 0;
   numberOfVideoReviews: number = 0;
 
-  collections: any[] = []
+  collections: any[] = [];
 
-  constructor(private db: AngularFirestore, private auth: AngularFireAuth) {
-  
-  }
+  constructor(private db: AngularFirestore, private auth: AngularFireAuth) {}
 
   ngOnInit(): void {
     this.auth.onAuthStateChanged(async (user) => {

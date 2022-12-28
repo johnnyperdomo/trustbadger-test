@@ -1,100 +1,80 @@
-
 <app-navbar></app-navbar>
 
 <nav
-class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light"
-id="sidebar"
+  class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light"
+  id="sidebar"
 >
-<app-collection-navbar></app-collection-navbar>
-
+  <app-collection-navbar></app-collection-navbar>
 </nav>
 
 <div class="main-content mt-2">
-    <div class="container-fluid">
-
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
-
-                <div class="header-body">
-                    <div class="row align-items-end">
-                      <div class="col">
-                
-                        <!-- Title -->
-                        <h1 class="header-title">
-                          All Reviews
-                        </h1>
-                
-                      </div>
-                      <div class="col-auto">
-                
-                        <!-- Button -->
-                        <a href="#!" class="btn btn-primary lift">
-                          Add Review
-                        </a>
-                
-                      </div>
-                    </div> <!-- / .row -->
-                  </div>
-
-
-                  <div class="mt-4">
-
-                    <div class="card" *ngFor="let review of reviews" >
-                        <div class="card-body">
-
-                            <div class="row align-items-center">
-                         
-                                <div class="col ms-n2">
-              
-                                  <!-- Title -->
-                                  <p class="mb-1">
-                                    {{review.text}}
-                                  </p>
-              
-                                </div>
-                                <div class="col-auto">
-              
-                                  <!-- Dropdown -->
-                                  <div class="dropdown">
-                                    <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <i class="fe fe-more-vertical"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                      <a href="#!" class="dropdown-item">
-                                        Action
-                                      </a>
-                                      <a href="#!" class="dropdown-item">
-                                        Another action
-                                      </a>
-                                      <a href="#!" class="dropdown-item">
-                                        Something else here
-                                      </a>
-                                    </div>
-                                  </div>
-              
-    
-              
-                                </div>
-                              </div>
-        
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <h5 class="text-muted">Reviewed by:</h5>
-                            <small> {{review.reviewer}}</small>
-                        </div>
-
-                        <div class="col-6">
-                            <h5 class="text-muted">Submitted:</h5>
-                            <small> {{review.date}}</small>
-                        </div>
-                    </div>
-                     
-                        </div>
-                      </div>
-
-                  </div>
-           
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-10">
+        <div class="header-body">
+          <div class="row align-items-end">
+            <div class="col">
+              <!-- Title -->
+              <h1 class="header-title">All Reviews</h1>
             </div>
+            <div class="col-auto">
+              <!-- Button -->
+              <a href="#!" class="btn btn-primary lift"> Add Review </a>
+            </div>
+          </div>
+          <!-- / .row -->
         </div>
+
+        <div class="mt-4">
+          <div class="card" *ngFor="let review of reviews">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col ms-n2">
+                  <!-- Title -->
+                  <p class="mb-1">
+                    {{ review.client_review }}
+                  </p>
+                </div>
+                <div class="col-auto">
+                  <!-- Dropdown -->
+                  <div class="dropdown">
+                    <a
+                      href="#"
+                      class="dropdown-ellipses dropdown-toggle"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i class="fe fe-more-vertical"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <a href="#!" class="dropdown-item"> Edit </a>
+                      <a href="#!" class="dropdown-item"> Delete </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-4">
+                <div class="col-6">
+                  <h5 class="text-muted">Reviewed by:</h5>
+                  <small> {{ review.client_name }}</small>
+                </div>
+
+                <div class="col-6">
+                  <h5 class="text-muted">Submitted:</h5>
+                  <small>
+                    {{
+                      review.created.toMillis() | date : "MMMM dd, yyyy"
+                    }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
