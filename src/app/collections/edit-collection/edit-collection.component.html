@@ -9,13 +9,13 @@
           <!-- Collection Name -->
 
           <div class="form-group">
-            <label for="collectionName">Collection Name</label>
+            <label for="name">Collection Name</label>
             <input
               type="text"
-              id="collectionName"
+              id="name"
               class="form-control"
-              placeholder="Store 1: Johnny's Ecommerce Store"
-              formControlName="collectionName"
+              placeholder="Gymshark Reviews"
+              formControlName="name"
             />
 
             <!-- <span
@@ -31,13 +31,13 @@
           <!-- Header Title -->
 
           <div class="form-group">
-            <label for="headerTitle">Header Title</label>
+            <label for="heading">Header Title</label>
             <input
               type="text"
-              id="headerTitle"
+              id="heading"
               class="form-control"
               placeholder="Leave Johnny's Store an Honest Review"
-              formControlName="headerTitle"
+              formControlName="heading"
             />
 
             <!-- <span
@@ -68,12 +68,12 @@
           </div> -->
 
           <div class="form-group">
-            <label for="customMessage">Custom Message</label>
+            <label for="custom_message">Custom Message</label>
             <textarea
-              id="customMessage"
+              id="custom_message"
               class="form-control"
               placeholder="Please leave us a review and let us know how we did."
-              formControlName="customMessage"
+              formControlName="custom_message"
             ></textarea>
 
             <small class="form-text text-muted mt-2">
@@ -103,15 +103,17 @@
               <button
                 class="btn btn-lg btn-block btn-primary mb-3"
                 type="submit"
+                [disabled]="!collectionForm.valid"
+                (click)="createNewCollection()"
               >
                 <!-- Loading Spinner -->
-
-                <span
+                <!-- LATER: have text for loading spinner -->
+                <!-- <span
                   class="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
                   mt-2
-                ></span>
+                ></span> -->
                 Create Collection
               </button>
             </div>

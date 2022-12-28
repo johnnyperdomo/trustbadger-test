@@ -38,6 +38,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { environment } from '../environments/environment';
 import { TextRequestDialogComponent } from './collections/request/text-request-dialog/text-request-dialog.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { TextRequestDialogComponent } from './collections/request/text-request-d
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
@@ -78,7 +80,7 @@ import { TextRequestDialogComponent } from './collections/request/text-request-d
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
-    ClipboardModule
+    ClipboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
