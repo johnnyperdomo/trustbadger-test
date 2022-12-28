@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
 export class ReviewsComponent implements OnInit {
   reviews: any[] = [];
 
-  constructor(private db: AngularFirestore, private router: Router) {}
+  constructor(
+    private db: AngularFirestore,
+    private router: Router,
+    private auth: AngularFireAuth
+  ) {}
 
   ngOnInit(): void {
     this.getAllReviews();
@@ -43,6 +48,29 @@ export class ReviewsComponent implements OnInit {
     } catch (error) {
       alert(error);
       //LATER: do something here
+    }
+  }
+
+  deleteReview(review: any) {
+    //LATER: create "types" later on so more organized with typescript
+    console.log(review);
+
+    if (confirm('Are you sure you want to delete this review?') == true) {
+      //true
+      this.auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          try {
+            await this.db.collection('reviews').doc(review.id).delete();
+
+            console.log('deleted item');
+            //LATER: add snackbar
+          } catch (error) {
+            alert(error);
+          }
+        }
+      });
+
+      console.log('true');
     }
   }
 
