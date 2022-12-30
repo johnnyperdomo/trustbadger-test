@@ -18,6 +18,7 @@ import { nanoid } from 'nanoid';
 export class TextRequestDialogComponent {
   userID: string = '';
   textForm!: FormGroup;
+  reviewID?: string;
 
   constructor(
     public dialogRef: MatDialogRef<TextRequestDialogComponent>,
@@ -26,15 +27,26 @@ export class TextRequestDialogComponent {
     private router: Router,
     private db: AngularFirestore
   ) {
-    this.setupLoginForm();
-    console.log(data);
+    if (data.isEditing) {
+      this.reviewID = data.review.reviewID;
+
+      this.setupLoginForm(
+        data.review.name,
+        data.review.review,
+        data.review.email
+      );
+      console.log(data);
+    } else {
+      this.setupLoginForm('', '', '');
+      console.log(data);
+    }
   }
 
-  setupLoginForm() {
+  setupLoginForm(name: string, review: string, email: string) {
     this.textForm = this._formBuilder.group({
-      name: ['', [Validators.required]],
-      review: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      name: [name, [Validators.required]],
+      review: [review, [Validators.required]],
+      email: [email, [Validators.required, Validators.email]],
     });
   }
 
@@ -46,7 +58,14 @@ export class TextRequestDialogComponent {
     let userID = this.data.collection.userID;
     let collectionsID = this.data.collection.id;
 
-    this.submitReview(userID, collectionsID, name, email, review);
+    this.submitReview(
+      userID,
+      collectionsID,
+      name,
+      email,
+      review,
+      this.reviewID
+    );
   }
 
   async submitReview(
@@ -54,18 +73,19 @@ export class TextRequestDialogComponent {
     collectionsID: string,
     client_name: string,
     client_email: string,
-    client_review: string
+    client_review: string,
+    reviewID?: string
   ) {
     try {
-      let newDocID = nanoid();
+      let docID = reviewID ? reviewID : nanoid(); //if review id exists -> update, else create a new one
 
       await this.db.firestore
         .collection('reviews')
-        .doc(newDocID)
+        .doc(docID)
         .set(
           {
             userID: userID,
-            id: newDocID,
+            id: docID,
             type: 'text',
             client_name,
             client_email,
@@ -75,7 +95,7 @@ export class TextRequestDialogComponent {
             attachments: [],
             collections: [collectionsID],
             video_url: '',
-            created: firebase.default.firestore.Timestamp.now(),
+            created: firebase.default.firestore.Timestamp.now(), //LATER: stop this from being edited when editing review, create a seperate "updated on"
           },
           { merge: true }
         );

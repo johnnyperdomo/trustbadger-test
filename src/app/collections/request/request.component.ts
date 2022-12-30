@@ -28,11 +28,11 @@ export class RequestComponent implements OnInit {
   }
 
   openTextReviewDialog() {
-
-const stream = {
-  redirect: true,
-  collection: this.data
-}
+    const stream = {
+      isEditing: false,
+      redirect: true,
+      collection: this.data,
+    };
 
     this.dialog.open(TextRequestDialogComponent, {
       data: stream,

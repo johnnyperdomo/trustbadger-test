@@ -51,7 +51,19 @@
                       <i class="fe fe-more-vertical"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                      <a href="#!" class="dropdown-item"> Edit </a>
+                      <button
+                        (click)="
+                          editReview(
+                            review.client_name,
+                            review.client_review,
+                            review.client_email,
+                            review.id
+                          )
+                        "
+                        class="dropdown-item"
+                      >
+                        Edit
+                      </button>
                       <button
                         class="dropdown-item"
                         (click)="deleteReview(review)"

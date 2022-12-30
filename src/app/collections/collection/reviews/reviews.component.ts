@@ -86,8 +86,38 @@ export class ReviewsComponent implements OnInit {
 
           if (data) {
             const stream = {
+              isEditing: false,
               redirect: false,
               collection: data,
+            };
+
+            this.dialog.open(TextRequestDialogComponent, {
+              data: stream,
+              autoFocus: true,
+            });
+          } else {
+            alert('page not found');
+            //LATER: update this to just show a 404 if anything
+          }
+        });
+    } catch (error) {}
+  }
+
+  async editReview(name: string, review: string, email: string, reviewID: string) {
+    try {
+      this.db
+        .collection('collections')
+        .doc(this.collectionID)
+        .valueChanges()
+        .subscribe((data: any) => {
+          console.log(data);
+
+          if (data) {
+            const stream = {
+              isEditing: true,
+              redirect: false,
+              collection: data,
+              review: { name, review, email, reviewID },
             };
 
             this.dialog.open(TextRequestDialogComponent, {

@@ -12,4 +12,6 @@ Crisp.setZIndex(99999);
 })
 export class AppComponent {
   title = 'angular-codespace';
+
+  //LATER: in the app you're subscribed to value changes for some things, but also make sure to unsubscribe for firebase things so it doesn't get called too often
 }
