@@ -98,13 +98,13 @@
             <!-- Submit -->
             <div class="col-8 col-sm-6 col-md-4">
               <!-- FIX: don't let user spam create button -->
-              <!-- LATER: change text depending on editmode or not -->
-              <!-- [disabled]="!collectionForm.valid" -->
+
               <button
                 class="btn btn-lg btn-block btn-primary mb-3"
                 type="submit"
                 [disabled]="!collectionForm.valid"
                 (click)="createNewCollection()"
+                *ngIf="isEditing === false"
               >
                 <!-- Loading Spinner -->
                 <!-- LATER: have text for loading spinner -->
@@ -115,6 +115,24 @@
                   mt-2
                 ></span> -->
                 Create Collection
+              </button>
+
+              <button
+                class="btn btn-lg btn-block btn-primary mb-3"
+                type="submit"
+                [disabled]="!collectionForm.valid"
+                (click)="editCollection()"
+                *ngIf="isEditing === true"
+              >
+                <!-- Loading Spinner -->
+                <!-- LATER: have text for loading spinner -->
+                <!-- <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                mt-2
+              ></span> -->
+                Edit Collection
               </button>
             </div>
           </div>

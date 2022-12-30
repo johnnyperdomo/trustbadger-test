@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CollectionNavbarComponent implements OnInit {
   requestLink: string = '';
+  editLink: string = '';
+
   constructor(
     private router: Router,
     private clipboard: Clipboard,
@@ -19,6 +21,7 @@ export class CollectionNavbarComponent implements OnInit {
   ngOnInit(): void {
     const collectionID = this.router.url.split('collections/')[1].split('/')[0];
     this.requestLink = '/collections/request/' + collectionID;
+    this.editLink = `/collections/${collectionID}/edit`;
   }
 
   copyRequestLink() {
@@ -29,4 +32,6 @@ export class CollectionNavbarComponent implements OnInit {
       duration: 3000,
     });
   }
+
+  goToEditPage() {}
 }
