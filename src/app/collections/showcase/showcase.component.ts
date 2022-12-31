@@ -1,21 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import MagicGrid from 'magic-grid';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-showcase',
   templateUrl: './showcase.component.html',
   styleUrls: ['./showcase.component.scss'],
 })
-export class ShowcaseComponent {
+export class ShowcaseComponent implements OnDestroy, OnInit {
   collectionData: any = {};
   reviews: any = [];
+
+  reviewsSub!: Subscription;
+  collectionsSub!: Subscription;
 
   constructor(private db: AngularFirestore, private router: Router) {}
 
   ngOnInit(): void {
     this.getInfoFromCollectionID();
   }
+
+  // ngAfterViewInit(): void {
+  //   //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+  //   //Add 'implements AfterViewInit' to the class.
+  //   this.getInfoFromCollectionID();
+  // }
 
   //get the collection information from the ID
   async getInfoFromCollectionID() {
@@ -26,12 +37,12 @@ export class ShowcaseComponent {
     //LATER: receiving error messages, cannot read value changes
 
     try {
-      this.db
+      this.collectionsSub = this.db
         .collection('collections')
         .doc(collectionID)
         .valueChanges()
         .subscribe((data: any) => {
-          console.log(data);
+          console.log(data); //FIX: this gets double called sometimes which makes the magicgrid glitch
 
           if (data) {
             this.collectionData = data;
@@ -52,17 +63,34 @@ export class ShowcaseComponent {
 
   async getAllReviews(collectionID: string) {
     try {
-      this.db
+      this.reviewsSub = this.db
         .collection('reviews', (ref) =>
           ref.where('collections', 'array-contains', collectionID)
         )
         .valueChanges()
-        .subscribe((reviews: any) => {
-          if (reviews) {
+        .subscribe((reviews: any[]) => {
+          if (reviews && reviews.length !== 0) {
             this.reviews = reviews;
             console.log(reviews);
+            console.log('reviews called');
 
-            // this.reviews = reviews;
+            setTimeout(() => {
+              //dynamic grid
+              let magicGrid = new MagicGrid({
+                container: '.grid-layout',
+                gutter: 0,
+                items: this.reviews.length,
+                animate: true, // Optional.
+                maxColumns: 3,
+              });
+
+              if (magicGrid.ready() === true) {
+                magicGrid.listen();
+                magicGrid.positionItems();
+              }
+            }, 150); //LATER: remove delay? Currently I have the delay to help the magicgrid stop glitching on initialization. Maybe it's waiting for the page to finish rendering, waiting for dom to be ready
+
+            //LATER: fix issue, when it's updated in firebase it loses positioning grid
           } else {
             //LATER: do something
             //return empty,
@@ -71,9 +99,29 @@ export class ShowcaseComponent {
           // console.log(data);
           // this.collections = data;
         });
+
+      // magicGrid.positionItems();
+
+      // var repositionTimer = setInterval(() => {
+      //   magicGrid.positionItems();
+      // }, 100);
+
+      // setTimeout(() => {
+      //   clearInterval(repositionTimer);
+      // }, 3000);
     } catch (error) {
       alert(error);
       //LATER: do something here
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.collectionsSub) {
+      this.collectionsSub.unsubscribe();
+    }
+
+    if (this.reviewsSub) {
+      this.reviewsSub.unsubscribe();
     }
   }
 }
