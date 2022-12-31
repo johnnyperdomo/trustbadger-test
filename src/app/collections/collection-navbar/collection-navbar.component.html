@@ -19,7 +19,7 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [routerLink]="['/all-review']"
+            [routerLink]="['/collections/', collectionID, 'reviews']"
             data-bs-toggle="collapse"
             role="button"
             aria-expanded="false"
@@ -31,7 +31,7 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [routerLink]="['/showcase']"
+            [routerLink]="['/collections/', collectionID, 'showcase']"
             data-bs-toggle="collapse"
             role="button"
             aria-expanded="false"
@@ -43,7 +43,7 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            [routerLink]="['/embed-widget']"
+            [routerLink]="['/collections/', collectionID, 'embed-widget']"
             data-bs-toggle="collapse"
             role="button"
             aria-expanded="false"
