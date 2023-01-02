@@ -91,6 +91,7 @@ export class ReviewsComponent implements OnInit {
               collection: data,
             };
 
+            //FIX: fix this because it keeps getting called multiple times
             this.dialog.open(TextRequestDialogComponent, {
               data: stream,
               autoFocus: true,
@@ -103,7 +104,12 @@ export class ReviewsComponent implements OnInit {
     } catch (error) {}
   }
 
-  async editReview(name: string, review: string, email: string, reviewID: string) {
+  async editReview(
+    name: string,
+    review: string,
+    email: string,
+    reviewID: string
+  ) {
     try {
       this.db
         .collection('collections')
