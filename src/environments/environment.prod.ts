@@ -7,5 +7,10 @@ export const environment = {
     authDomain: 'trustbadger-dev.firebaseapp.com',
     messagingSenderId: '646066223104',
   },
-  production: true
+  production: true,
+  stripe: {
+    pricingTable: `<stripe-pricing-table pricing-table-id="prctbl_1MLudIBbTwqiwTLEQ1y58YBJ"
+    publishable-key="pk_live_51MLUx0BbTwqiwTLERcqEaGlgtoOcqPehvrpQpadO5EgI2T0XbR89AnZ1TwRe6m81YzfVtEKQeLaNKFm5IoBwEoN700vVvAeQg4">
+    </stripe-pricing-table>`
+  },
 };

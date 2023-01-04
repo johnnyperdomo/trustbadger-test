@@ -11,7 +11,12 @@ export const environment = {
     authDomain: 'trustbadger-dev.firebaseapp.com',
     messagingSenderId: '646066223104',
   },
-  production: false
+  production: false,
+  stripe: {
+    pricingTable: `<stripe-pricing-table pricing-table-id="prctbl_1MLZtOBbTwqiwTLEQP6tiakq"
+    publishable-key="pk_test_51MLUx0BbTwqiwTLE8Pg1hwrx8dnVs8H9PYsr17M5Ey3nm5Z7gmL3ABxglzxPD4CmuP6BCPWwgoYzlIt6Joem7Sgq00jAoIEF5o">
+    </stripe-pricing-table>`,
+  },
 };
 
 /*

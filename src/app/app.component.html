@@ -1,1 +1,23 @@
+<div class="container justify-content-center" *ngIf="showSubscriptionAlert">
+  <div class="alert alert-warning mb-2 text-center" role="alert">
+    <i class="fe fe-alert-triangle"></i>
+    <button
+      class="btn btn-link btn-sm text-dark"
+      (click)="promptUpgradeBeforeTrial()"
+    >
+      <b>
+        <u
+          >You have {{ daysLeftOnTrial }} days left in your trial. Click here
+          and upgrade your plan to continue using trustbadger without any
+          interruptions. You can cancel anytime.</u
+        >
+      </b>
+
+      <!-- <i class="fe fe-arrow-right"></i> -->
+    </button>
+
+    <i class="fe fe-alert-triangle"></i>
+  </div>
+</div>
+
 <router-outlet></router-outlet>
