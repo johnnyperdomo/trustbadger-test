@@ -9,6 +9,8 @@ Crisp.configure('ff3b5748-9d1a-476e-8931-8dcd518f93ea');
 Crisp.load();
 Crisp.setZIndex(99999);
 
+//LATER: make usetiful more helpful. With helpguides and tours. Also pay for it. Also maybe add user info into it. Or, maybe just use a different tool altogether, something more mature and professional.
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
