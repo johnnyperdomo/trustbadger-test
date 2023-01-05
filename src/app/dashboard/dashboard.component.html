@@ -102,7 +102,11 @@
           </div>
           <div class="col-auto">
             <!-- Button -->
-            <a [routerLink]="['/new/collections']" class="btn btn-primary lift">
+            <a
+              *ngIf="collections.length < 1"
+              [routerLink]="['/new/collections']"
+              class="btn btn-primary lift"
+            >
               Create New Collection
             </a>
           </div>
