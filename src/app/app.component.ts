@@ -169,6 +169,7 @@ export class AppComponent implements OnInit {
     //manual upgrade before trial ends
     // let pricingTable: string = environment.stripe.pricingTable;
 
+    //FIX: configure stripe checkout session to work correctly with existing customers
     let pricingTable = `<stripe-pricing-table pricing-table-id="prctbl_1MLZtOBbTwqiwTLEQP6tiakq"
     publishable-key="pk_test_51MLUx0BbTwqiwTLE8Pg1hwrx8dnVs8H9PYsr17M5Ey3nm5Z7gmL3ABxglzxPD4CmuP6BCPWwgoYzlIt6Joem7Sgq00jAoIEF5o" customer-email="butter@trustbadger.com"
     ></stripe-pricing-table>`;

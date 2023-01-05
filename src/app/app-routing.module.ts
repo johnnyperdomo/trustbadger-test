@@ -121,7 +121,7 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin),
     children: [
       { path: 'reviews', component: ReviewsComponent },
-      { path: 'embed', component: EmbedComponent },
+      // { path: 'embed', component: EmbedComponent },
     ],
   },
 
