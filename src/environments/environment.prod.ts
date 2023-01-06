@@ -9,8 +9,6 @@ export const environment = {
   },
   production: true,
   stripe: {
-    pricingTable: `<stripe-pricing-table pricing-table-id="prctbl_1MLudIBbTwqiwTLEQ1y58YBJ"
-    publishable-key="pk_live_51MLUx0BbTwqiwTLERcqEaGlgtoOcqPehvrpQpadO5EgI2T0XbR89AnZ1TwRe6m81YzfVtEKQeLaNKFm5IoBwEoN700vVvAeQg4">
-    </stripe-pricing-table>`
+    starterPriceID: 'price_1MLZJtBbTwqiwTLE4h0jIhVe',
   },
 };

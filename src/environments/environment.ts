@@ -13,9 +13,7 @@ export const environment = {
   },
   production: false,
   stripe: {
-    pricingTable: `<stripe-pricing-table pricing-table-id="prctbl_1MLZtOBbTwqiwTLEQP6tiakq"
-    publishable-key="pk_test_51MLUx0BbTwqiwTLE8Pg1hwrx8dnVs8H9PYsr17M5Ey3nm5Z7gmL3ABxglzxPD4CmuP6BCPWwgoYzlIt6Joem7Sgq00jAoIEF5o">
-    </stripe-pricing-table>`,
+    starterPriceID: 'price_1MLZMgBbTwqiwTLEABqmzMF6',
   },
 };
 

@@ -4,6 +4,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Crisp } from 'crisp-sdk-web';
 import { environment } from 'src/environments/environment';
 import * as Swal from 'sweetalert2';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { Subscription } from 'rxjs';
 
 Crisp.configure('ff3b5748-9d1a-476e-8931-8dcd518f93ea');
 Crisp.load();
@@ -24,13 +26,19 @@ export class AppComponent implements OnInit {
   //new: never been subscribed before; active: the subscription is active; canceled: canceled; trial-expired: after 7 days are over of being new
   susbcriptionStatus!: 'new' | 'trial-expired' | 'active' | 'canceled';
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {}
+  firebaseFunctionSub!: Subscription;
+
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private firebaseFunctions: AngularFireFunctions
+  ) {}
 
   ngOnInit(): void {
-    //this.promptPaywallTrialEnded();
-    console.log('test');
     this.checkIfUserLoggedIn();
   }
+
+
 
   checkIfUserLoggedIn() {
     //if user logged in, check for sub,
@@ -44,6 +52,8 @@ export class AppComponent implements OnInit {
 
           return;
         } else {
+           this.createCheckoutSession();
+
           this.db
             .collection('users')
             .doc(user.uid)
@@ -152,11 +162,10 @@ export class AppComponent implements OnInit {
 
   promptPaywallTrialEnded() {
     //after trial ends
-    let pricingTable: string = environment.stripe.pricingTable;
 
     Swal.default.fire({
       titleText: 'Your 7-day trial has ended',
-      html: pricingTable,
+      // html: pricingTable,
       showCancelButton: false,
       showConfirmButton: false,
       grow: 'fullscreen',
@@ -169,16 +178,12 @@ export class AppComponent implements OnInit {
 
   promptUpgradeBeforeTrial() {
     //manual upgrade before trial ends
-    // let pricingTable: string = environment.stripe.pricingTable;
 
     //FIX: configure stripe checkout session to work correctly with existing customers
-    let pricingTable = `<stripe-pricing-table pricing-table-id="prctbl_1MLZtOBbTwqiwTLEQP6tiakq"
-    publishable-key="pk_test_51MLUx0BbTwqiwTLE8Pg1hwrx8dnVs8H9PYsr17M5Ey3nm5Z7gmL3ABxglzxPD4CmuP6BCPWwgoYzlIt6Joem7Sgq00jAoIEF5o" customer-email="butter@trustbadger.com"
-    ></stripe-pricing-table>`;
 
     Swal.default.fire({
       titleText: 'Upgrade to continue using trustbadger',
-      html: pricingTable,
+      // html: pricingTable,
       showCancelButton: true,
       cancelButtonText: 'Maybe Later',
       cancelButtonColor: '#dfdfdf',
@@ -193,6 +198,39 @@ export class AppComponent implements OnInit {
       footer:
         'Upgrade your plan to continue using Trustbadger. You can cancel anytime.',
     });
+  }
+
+  async createCheckoutSession() {
+    let checkoutSessionCallable = this.firebaseFunctions.httpsCallable(
+      'createCheckoutSession'
+    );
+
+    try {
+      this.firebaseFunctionSub = checkoutSessionCallable({
+        priceid: environment.stripe.starterPriceID,
+        successUrl: `${window.location.origin}/dashboard`,
+        cancelUrl: `${window.location.origin}/dashboard`,
+      }).subscribe((data) => {
+        const sessionId = data;
+
+        console.log('session id: ', sessionId);
+
+        //unsubscribe after it's completed the first time
+        this.firebaseFunctionSub.unsubscribe();
+      });
+
+      //LATER: loading spinner
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if (this.firebaseFunctionSub) {
+      this.firebaseFunctionSub.unsubscribe();
+    }
   }
 }
 

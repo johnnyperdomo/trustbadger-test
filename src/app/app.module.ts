@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
+
+import firebase from 'firebase/compat/app';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
@@ -40,6 +43,8 @@ import { environment } from '../environments/environment';
 import { TextRequestDialogComponent } from './collections/request/text-request-dialog/text-request-dialog.component';
 import { RouterModule } from '@angular/router';
 
+firebase.initializeApp(environment.firebase);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +81,7 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireFunctionsModule,
     AngularFirestoreModule,
     MatFormFieldModule,
     MatInputModule,
