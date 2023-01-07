@@ -1,14 +1,11 @@
 {
-  "name": "angular-codespace",
+  "name": "trustbadger",
   "version": "1.0.0",
-  "author": "austenstone",
+  "author": "johnnyperdomo",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:terraform": "terraform validate && terraform apply",
-    "start:docker": "docker run --name angular-codespace -d -p 8080:80 angular-codespace",
-    "build": "ng build --base-href angular-codespace",
-    "build:docker": "ng build && docker build . -t angular-codespace",
+    "start": "firebase use development && ng serve",
+    "build": "firebase use production && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --browsers=Headless --no-watch",
     "lint": "ng lint"
