@@ -1,4 +1,4 @@
-import { Component, isDevMode, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Crisp } from 'crisp-sdk-web';
@@ -6,7 +6,9 @@ import { environment } from 'src/environments/environment';
 import * as Swal from 'sweetalert2';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Subscription } from 'rxjs';
+import { loadStripe } from '@stripe/stripe-js';
 
+//crisp configuration
 Crisp.configure('ff3b5748-9d1a-476e-8931-8dcd518f93ea');
 Crisp.load();
 Crisp.setZIndex(99999);
@@ -18,10 +20,13 @@ Crisp.setZIndex(99999);
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   showSubscriptionAlert: boolean = false;
   daysLeftOnTrial: number = 0;
   stripeCustomerID: string = '';
+
+  stripeConfig = loadStripe(environment.stripe.publishableKey);
+  tempCheckoutSessionID: string = '';
 
   //new: never been subscribed before; active: the subscription is active; canceled: canceled; trial-expired: after 7 days are over of being new
   susbcriptionStatus!: 'new' | 'trial-expired' | 'active' | 'canceled';
@@ -38,8 +43,6 @@ export class AppComponent implements OnInit {
     this.checkIfUserLoggedIn();
   }
 
-
-
   checkIfUserLoggedIn() {
     //if user logged in, check for sub,
     //if no user logged in, don't show anything
@@ -52,8 +55,6 @@ export class AppComponent implements OnInit {
 
           return;
         } else {
-           this.createCheckoutSession();
-
           this.db
             .collection('users')
             .doc(user.uid)
@@ -126,14 +127,6 @@ export class AppComponent implements OnInit {
     } catch (error) {
       alert(error);
     }
-
-    //TODO: check subscription
-    // if (subscribed) {
-    //   return;
-    // }
-    //TODO: check if 7 day trial ended
-    //if trial ended -> paywall
-    //if trial is still active, before the 7 days -> show subscription Alert
   }
 
   //check if trial ended
@@ -165,7 +158,7 @@ export class AppComponent implements OnInit {
 
     Swal.default.fire({
       titleText: 'Your 7-day trial has ended',
-      // html: pricingTable,
+      html: this.paymentBlockHTML,
       showCancelButton: false,
       showConfirmButton: false,
       grow: 'fullscreen',
@@ -173,17 +166,44 @@ export class AppComponent implements OnInit {
         'Upgrade your plan to continue using Trustbadger. You can cancel anytime.',
       allowOutsideClick: false,
       allowEscapeKey: false,
+
+      didOpen: async () => {
+        const upgradeBtn = document.querySelector('#upgradeBtn');
+        if (!upgradeBtn) {
+          return;
+        }
+
+        await this.createCheckoutSession();
+
+        upgradeBtn.addEventListener('click', async () => {
+          let stripeLoader = await this.stripeConfig;
+
+          if (stripeLoader) {
+            stripeLoader.redirectToCheckout({
+              sessionId: this.tempCheckoutSessionID,
+            });
+          }
+        });
+      },
+      didClose: () => {
+        const upgradeBtn = document.querySelector('#upgradeBtn');
+        if (!upgradeBtn) {
+          return;
+        }
+
+        upgradeBtn.removeEventListener('click', () => {
+          console.log('removed event listener');
+        });
+      },
     });
   }
 
   promptUpgradeBeforeTrial() {
     //manual upgrade before trial ends
 
-    //FIX: configure stripe checkout session to work correctly with existing customers
-
     Swal.default.fire({
-      titleText: 'Upgrade to continue using trustbadger',
-      // html: pricingTable,
+      titleText: 'Upgrade to continue using Trustbadger',
+      html: this.paymentBlockHTML,
       showCancelButton: true,
       cancelButtonText: 'Maybe Later',
       cancelButtonColor: '#dfdfdf',
@@ -197,6 +217,34 @@ export class AppComponent implements OnInit {
       },
       footer:
         'Upgrade your plan to continue using Trustbadger. You can cancel anytime.',
+      didOpen: async () => {
+        const upgradeBtn = document.querySelector('#upgradeBtn');
+        if (!upgradeBtn) {
+          return;
+        }
+
+        await this.createCheckoutSession();
+
+        upgradeBtn.addEventListener('click', async () => {
+          let stripeLoader = await this.stripeConfig;
+
+          if (stripeLoader) {
+            stripeLoader.redirectToCheckout({
+              sessionId: this.tempCheckoutSessionID,
+            });
+          }
+        });
+      },
+      didClose: () => {
+        const upgradeBtn = document.querySelector('#upgradeBtn');
+        if (!upgradeBtn) {
+          return;
+        }
+
+        upgradeBtn.removeEventListener('click', () => {
+          console.log('removed event listener');
+        });
+      },
     });
   }
 
@@ -210,10 +258,10 @@ export class AppComponent implements OnInit {
         priceid: environment.stripe.starterPriceID,
         successUrl: `${window.location.origin}/dashboard`,
         cancelUrl: `${window.location.origin}/dashboard`,
-      }).subscribe((data) => {
+      }).subscribe(async (data) => {
         const sessionId = data;
 
-        console.log('session id: ', sessionId);
+        this.tempCheckoutSessionID = sessionId.id;
 
         //unsubscribe after it's completed the first time
         this.firebaseFunctionSub.unsubscribe();
@@ -232,6 +280,77 @@ export class AppComponent implements OnInit {
       this.firebaseFunctionSub.unsubscribe();
     }
   }
+
+  paymentBlockHTML = `<div class="container-fluid">
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-5 col-xl-4 col-sm-9 col-md-6">
+    <!-- Card -->
+    <div class="card mb-0">
+      <div class="card-body">
+        <!-- Title -->
+        <h6 class="text-uppercase text-center text-muted my-4">
+          Starter plan
+        </h6>
+
+        <!-- Price -->
+        <div class="row g-0 align-items-center justify-content-center">
+          <div class="col-auto">
+            <div class="h1 mb-0">$29</div>
+          </div>
+        </div>
+        <!-- / .row -->
+
+        <!-- Period -->
+        <div class="h6 text-uppercase text-center text-muted mb-5">
+          / month
+        </div>
+
+        <!-- Features -->
+        <div class="mb-3">
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex align-items-center justify-content-between px-0"
+            >
+              <small>Unlimited Text Reviews</small>
+              <i class="fe fe-check-circle text-success"></i>
+            </li>
+            <li
+              class="list-group-item d-flex align-items-center justify-content-between px-0"
+            >
+              <small>Public "Wall of Love" Page</small>
+              <i class="fe fe-check-circle text-success"></i>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between px-0"
+            >
+              <small class="text-left">Dedicated Landing Page to Collect Reviews</small>
+              <i class="fe fe-check-circle text-success"></i>
+            </li>
+            <li
+              class="list-group-item d-flex align-items-center justify-content-between px-0"
+            >
+              <small>Dashboard to Manage Reviews</small>
+              <i class="fe fe-check-circle text-success"></i>
+            </li>
+            <li
+              class="list-group-item d-flex align-items-center justify-content-between px-0"
+            >
+              <small>Priority Chat & Email Support</small>
+              <i class="fe fe-check-circle text-success"></i>
+            </li>
+          </ul>
+        </div>
+         <div class="text-center">
+           <button class="btn w-100 btn-primary" id="upgradeBtn"> Upgrade </button>
+           <small class="text-muted text-center mt-1"> Cancel Anytime </small>
+         </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+`;
 }
 
 //LATER: in the app you're subscribed to value changes for some things, but also make sure to unsubscribe for firebase things so it doesn't get called too often

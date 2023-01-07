@@ -10,5 +10,6 @@ export const environment = {
   production: true,
   stripe: {
     starterPriceID: 'price_1MLZJtBbTwqiwTLE4h0jIhVe',
+    publishableKey: 'pk_live_51MLUx0BbTwqiwTLERcqEaGlgtoOcqPehvrpQpadO5EgI2T0XbR89AnZ1TwRe6m81YzfVtEKQeLaNKFm5IoBwEoN700vVvAeQg4',
   },
 };
