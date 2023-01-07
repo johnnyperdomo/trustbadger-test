@@ -273,7 +273,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.firebaseFunctionSub.unsubscribe();
       });
 
-      //LATER: loading spinner
+      //LATER: loading spinner add later
     } catch (error) {
       alert(error);
     }
