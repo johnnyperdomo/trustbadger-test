@@ -1,7 +1,7 @@
 {
   "name": "trustbadger",
   "version": "1.0.0",
-  "author": "johnny-perdomo",
+  "author": "johnnyperdomo",
   "scripts": {
     "ng": "ng",
     "start": "firebase use development && ng serve",
