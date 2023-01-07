@@ -62,6 +62,12 @@ export class AppComponent implements OnInit, OnDestroy {
             .subscribe((data: any) => {
               let creationDate = new Date(data.created.seconds * 1000);
               let stripeID = data.stripeId;
+              let userEmail = user.email;
+              let userName = `${data.firstName} ${data.lastName}`;
+
+              //set user email to crisp for
+              Crisp.user.setEmail(userEmail!);
+              Crisp.user.setNickname(userName);
 
               this.stripeCustomerID = stripeID;
               console.log(this.stripeCustomerID);

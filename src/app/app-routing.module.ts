@@ -33,12 +33,14 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     ...canActivate(redirectUnauthorizedToLogin),
+    title: 'Dashboard - Trustbadger',
   },
 
   {
     path: 'onboarding',
     component: OnboardingComponent,
     ...canActivate(redirectUnauthorizedToLogin),
+    title: 'Getting Started - Trustbadger',
   },
 
   //auth
@@ -46,12 +48,14 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     ...canActivate(redirectLoggedInToDashboard),
+    title: 'Login - Trustbadger',
   },
 
   {
     path: 'signup',
     component: SignupComponent,
     ...canActivate(redirectLoggedInToDashboard),
+    title: 'Signup - Trustbadger',
   },
 
   //Settings
@@ -66,7 +70,11 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin),
     children: [
       // { path: 'account', component: AccountComponent },
-      { path: 'billing', component: BillingComponent },
+      {
+        path: 'billing',
+        component: BillingComponent,
+        title: 'Billing - Trustbadger',
+      },
     ],
   },
 
@@ -80,8 +88,12 @@ const routes: Routes = [
   {
     path: 'collections',
     children: [
-      { path: 'request/:id', component: RequestComponent },
-      { path: 'request/:id/success', component: RequestSuccessComponent },
+      { path: 'request/:id', component: RequestComponent, title: 'Request' },
+      {
+        path: 'request/:id/success',
+        component: RequestSuccessComponent,
+        title: 'Request',
+      },
     ],
   },
 
@@ -95,12 +107,14 @@ const routes: Routes = [
     path: 'new/collections',
     ...canActivate(redirectUnauthorizedToLogin),
     component: EditCollectionComponent,
+    title: 'Collections - Trustbadger',
   },
 
   //auth-required
   {
     path: 'collections',
     ...canActivate(redirectUnauthorizedToLogin),
+    title: 'Collections - Trustbadger',
     children: [
       { path: ':id', component: CollectionComponent },
       { path: ':id/edit', component: EditCollectionComponent },
@@ -111,7 +125,13 @@ const routes: Routes = [
   {
     path: 'collections/:id',
     component: CollectionComponent,
-    children: [{ path: 'showcase', component: ShowcaseComponent }],
+    children: [
+      {
+        path: 'showcase',
+        component: ShowcaseComponent,
+        title: 'Reviews',
+      },
+    ],
   },
 
   //auth required
@@ -120,7 +140,11 @@ const routes: Routes = [
     component: CollectionComponent,
     ...canActivate(redirectUnauthorizedToLogin),
     children: [
-      { path: 'reviews', component: ReviewsComponent },
+      {
+        path: 'reviews',
+        component: ReviewsComponent,
+        title: 'Reviews - Trustbadger',
+      },
       // { path: 'embed', component: EmbedComponent },
     ],
   },
