@@ -42,6 +42,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { environment } from '../environments/environment';
 import { TextRequestDialogComponent } from './collections/request/text-request-dialog/text-request-dialog.component';
 import { RouterModule } from '@angular/router';
+import { FooterBrandingComponent } from './footer-branding/footer-branding.component';
 
 firebase.initializeApp(environment.firebase);
 
@@ -67,6 +68,7 @@ firebase.initializeApp(environment.firebase);
     ShowcaseComponent,
     ShowcaseAllComponent,
     TextRequestDialogComponent,
+    FooterBrandingComponent,
   ],
   imports: [
     BrowserModule,
