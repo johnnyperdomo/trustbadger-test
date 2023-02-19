@@ -6,6 +6,7 @@
 >
   <app-collection-navbar></app-collection-navbar>
 </nav>
+<!-- //LATER: add rating -->
 
 <div class="main-content mt-2">
   <div class="container-fluid">
@@ -15,30 +16,138 @@
           <div class="row align-items-end">
             <div class="col">
               <!-- Title -->
-              <h1 class="header-title">All Reviews</h1>
+              <h1 class="header-title">Testimonials</h1>
             </div>
             <div class="col-auto">
               <!-- Button -->
-              <button class="btn btn-primary lift" (click)="addReview()">
-                Add Review
+              <button class="btn btn-primary lift" (click)="importReview()">
+                Import
               </button>
             </div>
           </div>
           <!-- / .row -->
         </div>
 
-        <div class="mt-4">
+        <div class="mt-3">
+          <!-- Products -->
+          <div class="card">
+            <div class="table-responsive" id="productsList">
+              <table class="table table-sm table-hover card-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Author</th>
+                    <th scope="col">Testimonial</th>
+                    <th scope="col">Source</th>
+                    <th colspan="2" scope="col text-right" width="20%">Date</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr *ngFor="let review of reviews">
+                    <td class="products-product">
+                      <!-- Author -->
+                      <div class="d-flex align-items-center">
+                        <!-- Image -->
+                        <div class="avatar avatar-sm">
+                          <img
+                            class="avatar-img rounded-circle mr-3"
+                            src="https://picsum.photos/200"
+                          />
+
+                          <!-- //TODO: add image placeholder here; name bubble if no img is present -->
+                        </div>
+
+                        <div class="ml-3">
+                          <!-- Name -->
+                          <h4
+                            class="font-weight-normal mb-1"
+                            style="width: 100px"
+                          >
+                            <span> {{ review.client_name }} </span>
+                          </h4>
+
+                          <!-- Job Title -->
+                          <small
+                            *ngIf="review.client_job_title !== ''"
+                            class="text-muted"
+                            >{{ review.client_job_title }}</small
+                          >
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <!-- Content -->
+                      <!-- //LATER: fix and update the styling -->
+                      <p class="text-secondary">
+                        {{ review.client_review }}
+                      </p>
+                    </td>
+
+                    <td></td>
+
+                    <td style="width: 100px">
+                      <small class="text-muted">
+                        {{
+                          review.created.toMillis() | date : "MMM dd, yyyy"
+                        }}</small
+                      >
+                      <!-- Date; with pipe modifier; converts unix seconds to Date -->
+                    </td>
+
+                    <td class="text-right">
+                      <!-- Dropdown -->
+                      <div class="dropdown">
+                        <a
+                          href="#"
+                          class="dropdown-ellipses dropdown-toggle"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="fe fe-more-vertical"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <!-- <a class="dropdown-item"> Edit </a> -->
+                          <button
+                            class="dropdown-item"
+                            (click)="
+                              editReview(
+                                review.client_name,
+                                review.client_review,
+                                review.client_email,
+                                review.id
+                              )
+                            "
+                          >
+                            Edit
+                          </button>
+                          <button
+                            class="dropdown-item"
+                            (click)="deleteReview(review)"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="mt-4">
           <div class="card" *ngFor="let review of reviews">
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col ms-n2">
-                  <!-- Title -->
                   <p class="mb-1">
                     <b>{{ review.client_review }}</b>
                   </p>
                 </div>
                 <div class="col-auto">
-                  <!-- Dropdown -->
                   <div class="dropdown">
                     <a
                       href="#"
@@ -92,7 +201,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

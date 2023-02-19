@@ -7,14 +7,14 @@
         <!-- Form -->
         <form *ngIf="collectionForm" [formGroup]="collectionForm">
           <!-- Collection Name -->
-
+          <!-- //LATER: add helper text for testimonial collection form -->
           <div class="form-group">
-            <label for="name">Collection Name</label>
+            <label for="name">Workspace Name</label>
             <input
               type="text"
               id="name"
               class="form-control"
-              placeholder="Gymshark Reviews"
+              placeholder=""
               formControlName="name"
             />
 
@@ -24,19 +24,19 @@
                   Please enter a valid link name.</span
                 > -->
             <small class="form-text text-muted mt-2">
-              Name of your collection. Only for Internal Use.
+              Name of your Workspace. (Product/Service)
             </small>
           </div>
 
           <!-- Header Title -->
 
           <div class="form-group">
-            <label for="heading">Header Title</label>
+            <label for="heading">Title of Header</label>
             <input
               type="text"
               id="heading"
               class="form-control"
-              placeholder="Leave Johnny's Store an Honest Review"
+              placeholder="Leave Johnny's Store an Honest Testimonial"
               formControlName="heading"
             />
 

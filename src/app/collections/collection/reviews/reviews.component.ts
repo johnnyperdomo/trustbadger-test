@@ -75,7 +75,7 @@ export class ReviewsComponent implements OnInit {
     }
   }
 
-  async addReview() {
+  async importReview() {
     try {
       this.db
         .collection('collections')
