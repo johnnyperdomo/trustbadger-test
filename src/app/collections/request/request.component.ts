@@ -4,6 +4,8 @@ import { TextRequestDialogComponent } from './text-request-dialog/text-request-d
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as firebase from 'firebase/compat/app';
+import { nanoid } from 'nanoid';
 
 @Component({
   selector: 'app-request',
@@ -49,7 +51,24 @@ export class RequestComponent implements OnInit {
     });
   }
 
-  submitWrittenTestimonial() {}
+  submitWrittenTestimonial() {
+    const testimonial = this.writtenTestimonialForm.value.testimonial;
+    const full_name = this.writtenTestimonialForm.value.full_name;
+    const email = this.writtenTestimonialForm.value.email;
+    const job_title = this.writtenTestimonialForm.value.job_title;
+    const website = this.writtenTestimonialForm.value.website;
+
+    console.log(testimonial, full_name, email, job_title, website);
+
+    this.submitTestimonialToServer(
+      full_name,
+      email,
+      job_title,
+      website,
+      testimonial,
+      'text'
+    );
+  }
 
   setupVideoTestimonialForm() {
     //profile picture not added in the form builder list
@@ -63,21 +82,75 @@ export class RequestComponent implements OnInit {
     });
   }
 
-  submitVideoTestimonial() {}
+  submitVideoTestimonial() {
+    const testimonial = this.videoTestimonialForm.value.testimonial;
+    const full_name = this.videoTestimonialForm.value.full_name;
+    const email = this.videoTestimonialForm.value.email;
+    const job_title = this.videoTestimonialForm.value.job_title;
+    const website = this.videoTestimonialForm.value.website;
 
-  onSubmit() {}
+    console.log(testimonial, full_name, email, job_title, website);
 
-  openTextReviewDialog() {
-    const stream = {
-      isEditing: false,
-      redirect: true,
-      collection: this.data,
-    };
+    this.submitTestimonialToServer(
+      full_name,
+      email,
+      job_title,
+      website,
+      testimonial,
+      'video'
+    );
+  }
 
-    this.dialog.open(TextRequestDialogComponent, {
-      data: stream,
-      autoFocus: true,
-    });
+  //TODO: add ability for video; add ability for profile picture
+  async submitTestimonialToServer(
+    client_name: string,
+    client_email: string,
+    client_job_title: string,
+    client_website: string,
+    client_review: string,
+    type: string
+  ) {
+    try {
+      const collectionsID = this.data.id; //collection id
+      const userID = this.data.userID;
+
+      let docID = nanoid(); //if review id exists -> update, else create a new one
+
+      await this.db.firestore
+        .collection('reviews')
+        .doc(docID)
+        .set(
+          {
+            userID: userID,
+            id: docID,
+            type,
+            client_name,
+            client_email,
+            client_review,
+            client_job_title,
+            client_website,
+            client_pic_url: '',
+            tags: [],
+            attachments: [],
+            collections: [collectionsID],
+            video_url: '',
+            created: firebase.default.firestore.Timestamp.now(), //LATER: stop this from being edited when editing review, create a seperate "updated on"
+          },
+          { merge: true }
+        );
+
+      //FIX //LATER: remove grey background from modal when redirecting pages
+      this.redirectToSuccessPage();
+
+      //when review is submitted
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  redirectToSuccessPage() {
+    const currentRoute = this.router.url;
+    this.router.navigate([`${currentRoute}/success`]);
   }
 
   //get the collection information from the ID
@@ -106,8 +179,5 @@ export class RequestComponent implements OnInit {
       //LATER: update this to just show a 404 if anything
       alert(error);
     }
-
-    //get id
-    //get url
   }
 }
