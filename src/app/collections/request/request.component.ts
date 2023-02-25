@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase/compat/app';
 import { nanoid } from 'nanoid';
+import { FilePondOptions } from 'filepond';
 
 @Component({
   selector: 'app-request',
@@ -22,13 +23,26 @@ export class RequestComponent implements OnInit {
 
   data: any = {}; //firebase data
 
+  chosenProfilePictureForTextForm?: File;
+  chosenProfilePictureForVideoForm?: File;
+
+  pondOptions: FilePondOptions = {
+    allowMultiple: false,
+    credits: false,
+
+    acceptedFileTypes: ['image/*'],
+    imageCropAspectRatio: '1:1', //image square
+    imagePreviewMaxHeight: 150,
+    maxFileSize: '3MB', //LATER: compress images to make them smaller; use a library
+    //LATER: allow image editing, so they can manually crop the head of their profile pictures
+  };
+
   // LATER: setup error messages on form inputs
 
   //TODO: send testimonials using api, not front end code, to save image data easier
 
   constructor(
     private _formBuilder: FormBuilder,
-    private dialog: MatDialog,
     private db: AngularFirestore,
     private router: Router
   ) {}
@@ -130,6 +144,7 @@ export class RequestComponent implements OnInit {
             client_job_title,
             client_website,
             client_pic_url: '',
+            source: 'trustbadger', //where the review came from
             tags: [],
             attachments: [],
             collections: [collectionsID],
@@ -179,5 +194,29 @@ export class RequestComponent implements OnInit {
       //LATER: update this to just show a 404 if anything
       alert(error);
     }
+  }
+
+  //textforms
+  pondHandleAddFileForTextForm(event: any) {
+    const chosenFile = event.file;
+    this.chosenProfilePictureForTextForm = chosenFile;
+
+    console.log(this.chosenProfilePictureForTextForm);
+  }
+
+  pondHandleRemoveFileForTextForm(event: any) {
+    this.chosenProfilePictureForTextForm = undefined;
+  }
+
+  //videoforms
+  pondHandleAddFileForVideoForm(event: any) {
+    const chosenFile = event.file;
+    this.chosenProfilePictureForVideoForm = chosenFile;
+
+    console.log(this.chosenProfilePictureForVideoForm);
+  }
+
+  pondHandleRemoveFileForvideoForm(event: any) {
+    this.chosenProfilePictureForVideoForm;
   }
 }

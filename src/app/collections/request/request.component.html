@@ -163,6 +163,14 @@
                   Profile Picture
                 </label>
 
+                <file-pond
+                  #textform
+                  [options]="pondOptions"
+                  (onaddfile)="pondHandleAddFileForTextForm($event)"
+                  (onremovefile)="pondHandleRemoveFileForTextForm($event)"
+                >
+                </file-pond>
+
                 <!-- //TODO: add profile picture widget -->
               </div>
 
@@ -301,7 +309,13 @@
                   Profile Picture
                 </label>
 
-                <!-- //TODO: add profile picture widget -->
+                <file-pond
+                  #videoform
+                  [options]="pondOptions"
+                  (onaddfile)="pondHandleAddFileForVideoForm($event)"
+                  (onremovefile)="pondHandleRemoveFileForvideoForm($event)"
+                >
+                </file-pond>
               </div>
 
               <div class="form-group">

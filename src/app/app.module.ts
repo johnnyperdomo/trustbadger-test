@@ -43,6 +43,22 @@ import { environment } from '../environments/environment';
 import { TextRequestDialogComponent } from './collections/request/text-request-dialog/text-request-dialog.component';
 import { RouterModule } from '@angular/router';
 import { FooterBrandingComponent } from './footer-branding/footer-branding.component';
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+
+// import and register filepond file type validation plugin
+import * as FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+
+// Import the plugin code
+import * as FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import * as FilePondPluginImageCrop from 'filepond-plugin-image-crop';
+import * as FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+
+registerPlugin(
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType,
+  FilePondPluginImageCrop,
+  FilePondPluginFileValidateSize
+);
 
 firebase.initializeApp(environment.firebase);
 
@@ -89,6 +105,7 @@ firebase.initializeApp(environment.firebase);
     MatInputModule,
     MatTooltipModule,
     ClipboardModule,
+    FilePondModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
