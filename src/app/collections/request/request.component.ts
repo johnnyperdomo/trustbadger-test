@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { TextRequestDialogComponent } from './text-request-dialog/text-request-dialog.component';
+
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as firebase from 'firebase/compat/app';
 import { nanoid } from 'nanoid';
 import { FilePondOptions } from 'filepond';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-request',
@@ -28,6 +28,7 @@ export class RequestComponent implements OnInit {
 
   pondOptions: FilePondOptions = {
     allowMultiple: false,
+    allowFileEncode: true,
     credits: false,
 
     acceptedFileTypes: ['image/*'],
@@ -154,6 +155,8 @@ export class RequestComponent implements OnInit {
           { merge: true }
         );
 
+      //TODO: upload to backend, then redirect
+
       //FIX //LATER: remove grey background from modal when redirecting pages
       this.redirectToSuccessPage();
 
@@ -201,6 +204,13 @@ export class RequestComponent implements OnInit {
     const chosenFile = event.file;
     this.chosenProfilePictureForTextForm = chosenFile;
 
+    console.log(event);
+    let filename = chosenFile.filename;
+    let dataURL = chosenFile.getFileEncodeDataURL();
+
+    console.log(dataURL);
+    console.log(filename);
+
     console.log(this.chosenProfilePictureForTextForm);
   }
 
@@ -218,5 +228,30 @@ export class RequestComponent implements OnInit {
 
   pondHandleRemoveFileForvideoForm(event: any) {
     this.chosenProfilePictureForVideoForm;
+  }
+
+  async uploadToSpaces(body: any, key: string) {
+    try {
+      let dataToSend = {
+        data: {
+          key: key, //file name
+          body: body,
+        },
+      };
+
+      let do_spaces_bucket_path = environment.do_spaces.bucket;
+
+      fetch(`${do_spaces_bucket_path}/uploadToSpaces`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -13,4 +13,7 @@ export const environment = {
     publishableKey:
       'pk_live_51MLUx0BbTwqiwTLERcqEaGlgtoOcqPehvrpQpadO5EgI2T0XbR89AnZ1TwRe6m81YzfVtEKQeLaNKFm5IoBwEoN700vVvAeQg4',
   },
+  do_spaces: {
+    bucket: 'https://us-central1-trustbadger-prod.cloudfunctions.net',
+  },
 };

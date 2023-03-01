@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import { stripe } from './config';
-import { HttpsError } from 'firebase-functions/lib/providers/https';
+import { https } from 'firebase-functions';
 
 import * as admin from 'firebase-admin';
 const db = admin.firestore();
@@ -9,7 +9,7 @@ export const createCheckoutSession = functions.https.onCall(
   async (data, context) => {
     try {
       if (!context.auth || !context.auth.uid) {
-        throw new HttpsError(
+        throw new https.HttpsError(
           'unauthenticated',
           'You are not authorized to make this request.'
         );

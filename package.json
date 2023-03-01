@@ -25,6 +25,7 @@
     "@stripe/stripe-js": "^1.46.0",
     "crisp-sdk-web": "^1.0.5",
     "filepond": "^4.30.4",
+    "filepond-plugin-file-encode": "^2.1.10",
     "filepond-plugin-file-validate-size": "^2.2.8",
     "filepond-plugin-file-validate-type": "^1.2.8",
     "filepond-plugin-image-crop": "^2.0.6",

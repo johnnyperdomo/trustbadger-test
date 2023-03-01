@@ -53,14 +53,18 @@ import * as FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import * as FilePondPluginImageCrop from 'filepond-plugin-image-crop';
 import * as FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
+import * as FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+
 registerPlugin(
   FilePondPluginImagePreview,
   FilePondPluginFileValidateType,
   FilePondPluginImageCrop,
-  FilePondPluginFileValidateSize
+  FilePondPluginFileValidateSize,
+  FilePondPluginFileEncode
 );
 
 firebase.initializeApp(environment.firebase);
+
 
 @NgModule({
   declarations: [

@@ -16,6 +16,9 @@ export const environment = {
     starterPriceID: 'price_1MLZMgBbTwqiwTLEABqmzMF6',
     publishableKey: "pk_test_51MLUx0BbTwqiwTLE8Pg1hwrx8dnVs8H9PYsr17M5Ey3nm5Z7gmL3ABxglzxPD4CmuP6BCPWwgoYzlIt6Joem7Sgq00jAoIEF5o"
   },
+  do_spaces: {
+    bucket: "https://us-central1-trustbadger-dev.cloudfunctions.net",
+  }
 };
 
 /*

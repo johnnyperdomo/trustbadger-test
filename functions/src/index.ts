@@ -13,3 +13,4 @@ export { collectionCreated } from './triggers/statTriggers';
 export { collectionDeleted } from './triggers/statTriggers';
 
 export { createCheckoutSession } from './stripe';
+export { uploadToSpaces } from './spaces';
