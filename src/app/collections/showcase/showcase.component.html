@@ -21,13 +21,24 @@
           <div class="row align-items-center">
             <div class="col-auto">
               <!-- Avatar -->
-              <img
-                src="https://ui-avatars.com/api/?format=svg&background=0D8ABC&color=fff&name={{
-                  review.client_name
-                }}"
-                alt="..."
-                class="avatar-img rounded-circle avatar-sm"
-              />
+              <div *ngIf="review.client_pic_url; else placeholderProfile">
+                <div class="avatar avatar-sm">
+                  <img
+                    class="avatar-img rounded-circle mr-3"
+                    src="{{ review.client_pic_url }}"
+                  />
+                </div>
+              </div>
+              <ng-template #placeholderProfile>
+                <div class="avatar avatar-sm">
+                  <img
+                    class="avatar-img rounded-circle mr-3"
+                    src="https://ui-avatars.com/api/?format=svg&background=0D8ABC&color=fff&name={{
+                      review.client_name
+                    }}"
+                  />
+                </div>
+              </ng-template>
             </div>
             <div class="col ms-n2">
               <!-- Title -->
