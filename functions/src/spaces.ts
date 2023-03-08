@@ -4,8 +4,8 @@ import * as mime from 'mime-types';
 
 const config = functions.config();
 
-// import * as admin from 'firebase-admin';
-// const db = admin.firestore();
+import * as admin from 'firebase-admin';
+const db = admin.firestore();
 
 const spacesEndpoint = new aws.Endpoint('nyc3.digitaloceanspaces.com');
 
@@ -36,7 +36,11 @@ export const uploadToSpaces = functions.https.onCall(async (data, context) => {
       })
       .promise();
 
-    return { message: 'successful' };
+    let assetURL = `https://${config.do_spaces.bucket}.${spacesEndpoint.hostname}/${converted.fileName}`;
+
+    await updateFirebaseDocWithAsset(data.firebase_id, assetURL);
+
+    return { url: assetURL, firebaseID: data.firebase_id };
   } catch (error: any) {
     throw Error(error);
   }
@@ -67,4 +71,16 @@ function _uuidv4() {
       v = c == 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
+}
+
+async function updateFirebaseDocWithAsset(docID: string, assetURL: string) {
+  try {
+    await db.collection('reviews').doc(docID).update({
+      client_pic_url: assetURL,
+    });
+
+    return;
+  } catch (error: any) {
+    throw Error(error);
+  }
 }

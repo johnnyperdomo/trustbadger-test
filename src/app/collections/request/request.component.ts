@@ -23,8 +23,8 @@ export class RequestComponent implements OnInit {
 
   data: any = {}; //firebase data
 
-  chosenProfilePictureForTextForm?: File;
-  chosenProfilePictureForVideoForm?: File;
+  chosenProfilePictureForTextForm?: any;
+  chosenProfilePictureForVideoForm?: any;
 
   pondOptions: FilePondOptions = {
     allowMultiple: false,
@@ -52,7 +52,7 @@ export class RequestComponent implements OnInit {
     console.log();
     this.getInfoFromCollectionID();
     this.setupWrittenTestimonialForm();
-    this.setupVideoTestimonialForm();
+    //   this.setupVideoTestimonialForm();
   }
 
   setupWrittenTestimonialForm() {
@@ -157,6 +157,12 @@ export class RequestComponent implements OnInit {
 
       //TODO: upload to backend, then redirect
 
+      if (this.chosenProfilePictureForTextForm != undefined) {
+        this.uploadToSpaces(this.chosenProfilePictureForTextForm, docID);
+      }
+
+      console.log(docID);
+
       //FIX //LATER: remove grey background from modal when redirecting pages
       this.redirectToSuccessPage();
 
@@ -202,14 +208,12 @@ export class RequestComponent implements OnInit {
   //textforms
   pondHandleAddFileForTextForm(event: any) {
     const chosenFile = event.file;
-    this.chosenProfilePictureForTextForm = chosenFile;
 
-    console.log(event);
-    let filename = chosenFile.filename;
     let dataURL = chosenFile.getFileEncodeDataURL();
 
+    this.chosenProfilePictureForTextForm = dataURL;
+
     console.log(dataURL);
-    console.log(filename);
 
     console.log(this.chosenProfilePictureForTextForm);
   }
@@ -221,7 +225,11 @@ export class RequestComponent implements OnInit {
   //videoforms
   pondHandleAddFileForVideoForm(event: any) {
     const chosenFile = event.file;
-    this.chosenProfilePictureForVideoForm = chosenFile;
+    let dataURL = chosenFile.getFileEncodeDataURL();
+
+    this.chosenProfilePictureForVideoForm = dataURL;
+
+    console.log(dataURL);
 
     console.log(this.chosenProfilePictureForVideoForm);
   }
@@ -230,12 +238,12 @@ export class RequestComponent implements OnInit {
     this.chosenProfilePictureForVideoForm;
   }
 
-  async uploadToSpaces(body: any, key: string) {
+  async uploadToSpaces(body: any, firebaseID: string) {
     try {
       let dataToSend = {
         data: {
-          key: key, //file name
-          body: body,
+          firebase_id: firebaseID, //firebase ID
+          body: body, //data url
         },
       };
 
