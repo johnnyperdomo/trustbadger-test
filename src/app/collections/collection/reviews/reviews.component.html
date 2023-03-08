@@ -161,7 +161,15 @@
                       </p>
                     </td>
 
-                    <td></td>
+                    <td>
+                      <div class="avatar avatar-xs">
+                        <img
+                          src="assets/company-logos/{{ review.source }}.png"
+                          class="avatar-img"
+                          style="object-fit: contain"
+                        />
+                      </div>
+                    </td>
 
                     <td style="width: 100px">
                       <small class="text-muted">
@@ -284,6 +292,7 @@
 
         <!-- import testimonial modal -->
 
+        <!-- only close modal on x button, so we don'y accidently lost retrieved testimonials from external sources; we'd have to retrieve it again and it'd cost us extra server credits -->
         <div class="modal fade" id="importModal" data-bs-backdrop="static">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

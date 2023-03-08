@@ -62,6 +62,7 @@ export class ReviewsComponent implements OnInit {
         .subscribe((reviews: any) => {
           if (reviews) {
             this.reviews = reviews;
+            console.log(this.reviews);
           } else {
             //LATER: do something
             //return empty,
