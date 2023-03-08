@@ -20,9 +20,75 @@
             </div>
             <div class="col-auto">
               <!-- Button -->
-              <button class="btn btn-primary lift" (click)="importReview()">
+              <!-- <button class="btn btn-primary lift" (click)="importReview()">
                 Import
-              </button>
+              </button> -->
+
+              <div class="dropdown">
+                <a
+                  href="#"
+                  class="dropdown-ellipses dropdown-toggle"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="btn btn-primary lift">
+                    Import
+                    <span class="fe fe-chevron-down"></span>
+                  </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <!-- manual; native -->
+                  <button class="dropdown-item" [routerLink]="[requestLink]">
+                    Text Form
+                  </button>
+
+                  <!-- custom solution -->
+                  <button
+                    class="dropdown-item"
+                    (click)="importTestimonialFrom('twitter')"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importModal"
+                  >
+                    Twitter
+                  </button>
+
+                  <!-- datashake -->
+                  <button
+                    class="dropdown-item"
+                    (click)="importTestimonialFrom('trustpilot')"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importModal"
+                  >
+                    Trustpilot
+                  </button>
+                  <button
+                    class="dropdown-item"
+                    (click)="importTestimonialFrom('g2')"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importModal"
+                  >
+                    G2
+                  </button>
+                  <button
+                    class="dropdown-item"
+                    (click)="importTestimonialFrom('producthunt')"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importModal"
+                  >
+                    Producthunt
+                  </button>
+                  <button
+                    class="dropdown-item"
+                    (click)="importTestimonialFrom('capterra')"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importModal"
+                  >
+                    Capterra
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <!-- / .row -->
@@ -215,6 +281,109 @@
             </div>
           </div>
         </div> -->
+
+        <!-- import testimonial modal -->
+
+        <div class="modal fade" id="importModal">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-card card">
+                <!-- Card header -->
+
+                <div class="modal-header">
+                  <!-- Header: Title -->
+                  <h2 class="modal-title">
+                    Import testimonials from {{ importSource | titlecase }}
+                  </h2>
+
+                  <!-- Header: Close Btn-->
+                  <button type="button" data-bs-dismiss="modal" class="btn">
+                    <span class="fe fe-x"></span>
+                  </button>
+                </div>
+
+                <!-- Card body -->
+
+                <div class="modal-body">
+                  <!-- searchBar -->
+
+                  <label for="import_modal_search" class="small text-muted">
+                    Add link</label
+                  >
+
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="fe fe-search"></i>
+                      </span>
+                    </div>
+                    <input
+                      class="list-search form-control"
+                      type="search"
+                      placeholder="Search by Title"
+                      id="import_modal_search"
+                      [(ngModel)]="importModalSearchText"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-primary"
+                        (click)="searchForExternalTestimonials()"
+                      >
+                        submit
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- LATER: loading spinners -->
+                  <!-- LATER: add validation, and show error messages whether they retrieved reviews successfully or not -->
+
+                  <!-- checklists -->
+
+                  <div
+                    class="checklist"
+                    *ngIf="externalTestimonialsRetrieved.length > 0"
+                  >
+                    <label class="small text-muted">
+                      Select testimonials to import</label
+                    >
+
+                    <div
+                      *ngFor="
+                        let item of externalTestimonialsRetrieved;
+                        let indx = index
+                      "
+                    >
+                      <div class="form-check">
+                        <input
+                          #selectTestimonial
+                          class="form-check-input"
+                          type="checkbox"
+                          id="item.id"
+                          (change)="
+                            toggleImportTestimonialSelection(
+                              item,
+                              selectTestimonial.checked
+                            )
+                          "
+                        />
+                        <label class="form-check-label">{{ item.id }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    class="btn btn-lg btn-block btn-primary"
+                    (click)="saveImportedTestimonials()"
+                  >
+                    Import Testimonials
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

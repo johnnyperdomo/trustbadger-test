@@ -12,7 +12,28 @@ import { TextRequestDialogComponent } from '../../request/text-request-dialog/te
 })
 export class ReviewsComponent implements OnInit {
   reviews: any[] = [];
+
   collectionID: string = '';
+  requestLink: string = '';
+  editLink: string = '';
+
+  //non-native import testimonial sources
+  importSource:
+    | 'twitter'
+    | 'trustpilot'
+    | 'g2'
+    | 'producthunt'
+    | 'capterra'
+    | undefined;
+
+  //from import modal
+  externalTestimonialsRetrieved: any[] = [];
+
+  //import modal; search bar
+  importModalSearchText: string = '';
+
+  //from checkbox
+  selectedTestimonialsToImport: any[] = [];
 
   constructor(
     private db: AngularFirestore,
@@ -22,6 +43,9 @@ export class ReviewsComponent implements OnInit {
   ) {
     this.collectionID = this.router.url.split('collections/')[1].split('/')[0];
     ('collections');
+
+    this.requestLink = '/collections/request/' + this.collectionID;
+    this.editLink = `/collections/${this.collectionID}/edit`;
   }
 
   ngOnInit(): void {
@@ -146,5 +170,86 @@ export class ReviewsComponent implements OnInit {
 
     date = mm + '/' + dd + '/' + yyyy;
     return date;
+  }
+
+  importTestimonialFrom(
+    source: 'twitter' | 'trustpilot' | 'g2' | 'producthunt' | 'capterra'
+  ) {
+    console.log('source is chosen: ', source);
+
+    this.importSource = source;
+  }
+
+  searchForExternalTestimonials() {
+    console.log('pressed');
+
+    console.log(this.importModalSearchText);
+    this.externalTestimonialsRetrieved.push({
+      id: this.guidGenerator(),
+      text: 'hii',
+    });
+  }
+
+  //from external source
+  saveImportedTestimonials() {
+    //TODO: show which one selected or not
+
+    console.log('saved the following: ', this.selectedTestimonialsToImport);
+
+    //TODO: save to firebase
+
+    //TODO: close modal
+
+    //TODO: reset selection value once it has been cleared; or when modal is dismissed
+
+    // this.selectedTestimonialsToImport = []; //reset
+  }
+
+  toggleImportTestimonialSelection(item: any, isChecked: boolean) {
+    if (isChecked) {
+      //add to selectiong
+      this.selectedTestimonialsToImport.push(item);
+
+      console.log(this.selectedTestimonialsToImport);
+    } else {
+      let newSelections = this.removeObjectWithId(item.id);
+
+      console.log(newSelections);
+
+      this.selectedTestimonialsToImport = newSelections;
+    }
+  }
+
+  removeObjectWithId(id: string) {
+    let tempArr = this.selectedTestimonialsToImport;
+
+    const objWithIdIndex = tempArr.findIndex((obj) => obj.id === id);
+
+    if (objWithIdIndex > -1) {
+      tempArr.splice(objWithIdIndex, 1);
+    }
+
+    return tempArr;
+  }
+
+  //TODO: remove later, this is temporary
+  guidGenerator() {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (
+      S4() +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      S4() +
+      S4()
+    );
   }
 }
