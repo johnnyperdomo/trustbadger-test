@@ -21,6 +21,7 @@ export class EmbedPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getInfoFromCollectionID();
+    // FIX: Sometimes it's not resizing correctly when content is smaller
     iframeResizer({ log: true }, '#trustbadger-wall-of-love');
   }
 

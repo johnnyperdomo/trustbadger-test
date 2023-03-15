@@ -141,7 +141,7 @@ const routes: Routes = [
     component: CollectionComponent,
     children: [
       {
-        path: 'embed',
+        path: 'embed-page',
         component: EmbedPageComponent,
         title: 'Embed',
       },
@@ -157,9 +157,13 @@ const routes: Routes = [
       {
         path: 'reviews',
         component: ReviewsComponent,
-        title: 'Reviews - Trustbadger',
+        title: 'Testimonials - Trustbadger',
       },
-      // { path: 'embed', component: EmbedComponent },
+      {
+        path: 'embed',
+        component: EmbedComponent,
+        title: 'Embed - Trustbadger',
+      },
     ],
   },
 
