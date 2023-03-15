@@ -1,0 +1,77 @@
+<!-- LATER: have where they can leave a review -->
+<div class="main-content bg-white">
+  <div class="container-fluid">
+    <div class="grid-layout bg-white">
+      <div
+        class="col-11 col-sm-8 col-md-6 col-lg-5 col-xl-3"
+        *ngFor="let review of reviews"
+      >
+        <div class="card border-1">
+          <div class="card-body">
+            <div class="mb-3">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <!-- Avatar -->
+                  <div *ngIf="review.client_pic_url; else placeholderProfile">
+                    <div class="avatar avatar-sm">
+                      <img
+                        class="avatar-img rounded-circle mr-3"
+                        src="{{ review.client_pic_url }}"
+                      />
+                    </div>
+                  </div>
+                  <ng-template #placeholderProfile>
+                    <div class="avatar avatar-sm">
+                      <img
+                        class="avatar-img rounded-circle mr-3"
+                        src="https://ui-avatars.com/api/?format=svg&background=0D8ABC&color=fff&name={{
+                          review.client_name
+                        }}"
+                      />
+                    </div>
+                  </ng-template>
+                </div>
+                <div class="col ms-n2">
+                  <!-- Title -->
+                  <h4 class="mb-1">{{ review.client_name }}</h4>
+                </div>
+              </div>
+            </div>
+
+            <p>
+              {{ review.client_review }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="container">
+    <div class="row justify-content-center">
+      <div class="text-center m-4">
+        <a
+          href="https://www.trustbadger.com"
+          target="_blank"
+          class="btn btn-white"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="true"
+        >
+          <span>
+            <img
+              src="assets/images/trustbadger-logo.png"
+              width="20"
+              height="20"
+              class="mr-1"
+            />
+          </span>
+          Powered by Trustbadger
+        </a>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- LATER: add branding to embed page -->
+</div>

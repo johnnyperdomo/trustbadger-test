@@ -54,6 +54,7 @@ import * as FilePondPluginImageCrop from 'filepond-plugin-image-crop';
 import * as FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
 import * as FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import { EmbedPageComponent } from './collections/embed-page/embed-page.component';
 
 registerPlugin(
   FilePondPluginImagePreview,
@@ -89,6 +90,7 @@ firebase.initializeApp(environment.firebase);
     ShowcaseAllComponent,
     TextRequestDialogComponent,
     FooterBrandingComponent,
+    EmbedPageComponent,
   ],
   imports: [
     BrowserModule,

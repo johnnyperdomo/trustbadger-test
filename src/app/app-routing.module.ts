@@ -22,6 +22,7 @@ import {
 } from '@angular/fire/compat/auth-guard';
 
 import { canActivate } from '@angular/fire/compat/auth-guard';
+import { EmbedPageComponent } from './collections/embed-page/embed-page.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']); //if no logged in, restrict access
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['dashboard']); //if logged in, block auth
@@ -129,7 +130,20 @@ const routes: Routes = [
       {
         path: 'showcase',
         component: ShowcaseComponent,
-        title: 'Reviews',
+        title: 'Testimonials',
+      },
+    ],
+  },
+
+  //non-auth, public facing
+  {
+    path: 'collections/:id',
+    component: CollectionComponent,
+    children: [
+      {
+        path: 'embed',
+        component: EmbedPageComponent,
+        title: 'Embed',
       },
     ],
   },

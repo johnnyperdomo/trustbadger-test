@@ -35,7 +35,9 @@
               "src/assets/dashkit/libs/quill/dist/quill.core.css",
               "src/assets/dashkit/libs/highlightjs/styles/vs2015.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/iframe-resizer/js/iframeResizer.contentWindow.js"
+            ]
           },
           "configurations": {
             "production": {
