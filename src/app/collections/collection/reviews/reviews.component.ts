@@ -21,10 +21,11 @@ export class ReviewsComponent implements OnInit {
   importSource:
     | 'twitter'
     | 'trustpilot'
-    | 'g2'
     | 'producthunt'
     | 'capterra'
     | undefined;
+
+  //LATER:
 
   //from import modal
   externalTestimonialsRetrieved: any[] = [];
@@ -174,7 +175,7 @@ export class ReviewsComponent implements OnInit {
   }
 
   importTestimonialFrom(
-    source: 'twitter' | 'trustpilot' | 'g2' | 'producthunt' | 'capterra'
+    source: 'twitter' | 'trustpilot' | 'producthunt' | 'capterra'
   ) {
     console.log('source is chosen: ', source);
 
