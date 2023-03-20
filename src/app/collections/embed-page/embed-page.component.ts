@@ -10,19 +10,23 @@ import { iframeResizer } from 'iframe-resizer';
   templateUrl: './embed-page.component.html',
   styleUrls: ['./embed-page.component.scss'],
 })
-export class EmbedPageComponent implements OnInit {
+export class EmbedPageComponent implements OnInit, OnDestroy {
   collectionData: any = {};
   reviews: any = [];
 
   reviewsSub!: Subscription;
   collectionsSub!: Subscription;
 
-  constructor(private db: AngularFirestore, private router: Router) {}
+  constructor(private db: AngularFirestore, private router: Router) {
+    iframeResizer(
+      { log: true, checkOrigin: true, resizeFrom: 'child' },
+      '#trustbadger-wall-of-love'
+    );
+  }
 
   ngOnInit(): void {
     this.getInfoFromCollectionID();
-    // FIX: Sometimes it's not resizing correctly when content is smaller
-    iframeResizer({ log: true }, '#trustbadger-wall-of-love');
+    // FIX: Sometimes it's not resizing correctly when content is smaller: IFRAME Resizer
   }
 
   //get the collection information from the ID
