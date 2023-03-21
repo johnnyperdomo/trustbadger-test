@@ -42,7 +42,7 @@ export class EmbedComponent implements OnInit {
     this.embedCode = `
     <script type="text/javascript" src="https://trustbadger-storage.nyc3.cdn.digitaloceanspaces.com/iframeResizer.min.js"></script>
   
-    <iframe id="trustbadger-wall-of-love" src="http://${host}/collections/${this.collectionID}/embed-page" frameborder="0" scrolling="no" width="100%"></iframe>
+    <iframe id="trustbadger-wall-of-love" src="https://${host}/collections/${this.collectionID}/embed-page" frameborder="0" scrolling="no" width="100%"></iframe>
     
     <script type="text/javascript">
       iFrameResize({

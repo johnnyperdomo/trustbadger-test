@@ -18,10 +18,10 @@ export class EmbedPageComponent implements OnInit, OnDestroy {
   collectionsSub!: Subscription;
 
   constructor(private db: AngularFirestore, private router: Router) {
-    iframeResizer(
-      { log: true, checkOrigin: true, resizeFrom: 'child' },
-      '#trustbadger-wall-of-love'
-    );
+    // iframeResizer(
+    //   { log: true, checkOrigin: true, resizeFrom: 'child' },
+    //   '#trustbadger-wall-of-love'
+    // );
   }
 
   ngOnInit(): void {
